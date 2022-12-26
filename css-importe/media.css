@@ -1,0 +1,97 @@
+@media screen and (max-width: 1030px) {
+    * {
+        font-size: 0.9rem;
+    }
+
+    .header {
+        align-items: center;
+        justify-content: center;
+        background-color: var(--clr-primary);
+    }
+
+    .info-header {
+        margin: 0;
+    }
+
+    .test {
+        display: flex;
+    }
+
+    .side-bar {
+        transform: translate(-100%);
+        position: absolute;
+    }
+
+    .to-do-holder {
+        min-height: 80px;
+    }
+
+    .theme-select button {
+        padding: 0.1rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .add-task form {
+        flex-direction: column;
+    }
+
+    .left, .right {
+        width: 100%;
+    }
+
+    .backlog-responsive {
+        display: none;
+    }
+
+    .backlog-user-info {
+        transform: translate(400%, -180%);
+    }
+
+    #show-board-details-container, #show-backlog-details-container {
+        width: 90%;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        /*justify-content: space-around;*/
+    }
+
+    .board {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .card {
+        width: auto;
+        flex: none;
+    }
+
+    .select-employees-container {
+        width: 90%;
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    .search-bar {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .assigned-to-user-holder img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.active-mobile-side {
+    min-height: 100%;
+    transform: translate(0);
+}
+
+@media screen and (max-height: 500px) {
+    *{
+        font-size: 0.9rem;
+    }
+}

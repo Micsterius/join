@@ -1,0 +1,363 @@
+/*##################   AddTask.CSS   #########################*/
+.margin-top {
+    margin-top: 8px;
+}
+
+.margin-right {
+    margin-right: 8px;
+}
+
+.margin-left {
+    margin-left: 8px;
+}
+
+.width-80 {
+    width: 80px;
+}
+
+
+
+.editor-and-date-box {
+    display: flex;
+    align-items: center;
+}
+
+.input-selection-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.color-picker-selection-box {
+    display: flex;
+    align-items: center;
+}
+
+.color-picker-1 {
+    height: 32px;
+    width: 32px;
+    z-index: 5;
+    background-color: blue;
+}
+
+.color-picker-box {
+    height: 25px;
+    width: 25px;
+    margin-right: 6px;
+    margin-left: 6px;
+    border-radius: 25px;
+}
+
+.color-picker-box:hover::before {
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgb(6, 6, 72);
+}
+
+.color-picker-box:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px rgb(6, 6, 72);
+}
+
+.list-search-result {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+
+.list-search-result img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: var(--px-low);
+    border: 4px solid transparent;
+}
+
+.list-search-result img:hover {
+    cursor: pointer;
+    border: 4px solid var(--clr-primary);
+}
+
+.select-employees-container {
+    max-height: 90vh;
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--clr-primary-tr);
+    color: var(--clr-font1);
+    padding: var(--px-mid);
+    border: 2px solid var(--clr-primary);
+    border-radius: 0.4rem;
+}
+
+.select-employees-container-list {
+}
+
+.input-search-employees {
+    border: 2px solid var(--clr-primary);
+    border-radius: 0.4rem;
+    padding: 0.2rem;
+    margin: var(--px-low);
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.add-task-editor-list {
+    max-height: calc(90vh - 170px);
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.list-search-result-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: var(--px-low);
+    border: 4px solid transparent;
+}
+
+.list-search-result-img:hover {
+    cursor: pointer;
+    border: 4px solid var(--clr-primary);
+}
+
+.responsible-editor-list {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    width: calc(100% - 2.5rem);
+    overflow: overlay;
+}
+
+.responsible-editor-list-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--px-low);
+    width: 100%;
+}
+
+#responsible-editor-list-bin {
+    border-radius: 50%;
+}
+
+#responsible-editor-list-bin:hover {
+    background-color: var(--clr-primary-tr);
+    cursor: pointer;
+}
+
+#responsible-editor-list-bin img {
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+    padding: 0.4rem;
+}
+
+.responsible-editor-container-box {
+    position: relative;
+}
+
+.name-responsible-editor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, +80%);
+    background-color: var(--clr-bg);
+    color: var(--clr-font1);
+    border-radius: 0.4rem;
+    border: 1px solid var(--clr-primary);
+    display: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.list-search-result-img:hover+.name-responsible-editor {
+    display: block;
+}
+
+.crop {
+    width: 50px;
+    overflow: hidden;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.show-user-details-box {
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 25px;
+    width: 300px;
+    border: 2px solid var(--clr-primary);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.close-user-details {
+    color: red;
+    border-radius: 100%;
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.close-user-details:hover{
+    border: 1px solid gray;
+    color: gray;
+    cursor: pointer;
+}
+
+.close-user-details-box{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.padding-left {
+    padding-left: 8px;
+}
+
+.list-search-result-name-under-icon{
+    height: 30px;
+    overflow: auto;
+}
+
+.show-switch-text:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+.close-x-div{
+    margin-top: -15px;
+    margin-right: -15px;
+    font-size: 1.5rem;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 100%;
+    border: 1px solid black;
+    color: red;
+}
+
+.close-x-div:hover {
+    cursor: pointer;
+    border: 1px solid gray;
+    color: gray;
+}
+
+.close-x-div-box {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+.add-task form {
+    background-color: var(--clr-bg2);
+    width: 100%;
+    border-radius: 0.4rem;
+    display: flex;
+    padding: var(--px-mid);
+}
+
+.add-task form h3 {
+    margin-bottom: var(--px-low);
+    font-weight: bold;
+    border: none;
+    padding: 0;
+    color: var(--clr-primary);
+
+}
+
+.left {
+    width: 50%;
+    padding: var(--px-mid);
+}
+
+.right {
+    width: 50%;
+    padding: var(--px-mid);
+}
+
+.input-holder {
+    margin-bottom: var(--px-mid);
+}
+
+.input-holder2 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.assinged-to {
+    display: flex;
+    height: 150px;
+    width: 100%;
+}
+
+.btn-employees {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:2.5rem;
+    height: 2.5rem;
+    background-color: #d8d8d8;
+    border-radius: 50%;;
+}
+
+.btn-employees:hover {
+    background-color: var(--clr-primary-tr);
+}
+
+.btn-line1 {
+    position: absolute;
+    width: 60%;
+    height: 0.1rem;
+    background-color: var(--clr-primary);
+}
+
+.btn-line2 {
+    position: absolute;
+    width: 60%;
+    height: 0.1rem;
+    background-color: var(--clr-primary);
+    transform: rotate(90deg);
+}
+
+.btns-add-task {
+    display: flex;
+    justify-content: end;
+}
+
+.btn-cancel {
+    border: none;
+    background-color: transparent;
+    color: var(--clr-primary);
+    font-weight: bold;
+    margin-right: var(--px-mid);
+    width: 100px;
+}
+
+.employees-holder {
+    width: calc(100% - 70px);
+    display: flex;
+    align-items: center;
+}

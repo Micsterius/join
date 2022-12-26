@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Megrim&family=Merriweather:ital,wght@0,400;0,700;1,300&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+    --color-picker1: hsl(229, 100%, 26%);
+    --color-picker2: hsl(125, 100%, 26%);
+    --color-picker3: hsl(0, 100%, 26%);
+    --color-picker4: hsl(65, 85%, 35%);
+    --color-picker5: hsl(38, 93%, 30%);
+    --color-picker6: hsl(301, 100%, 26%);
+
+    transition: 225ms;
+}
+
+body[data-theme='default'] {
+    --main-font: 'PT Sans';
+
+    --clr-primary: hsl(240, 50%, 40%);
+    --clr-secondary: hsl(0, 100%, 30%);
+    --clr-bg: rgb(244, 244, 244);
+    --clr-bg2: #e9e6fe;
+    --clr-font1: rgb(0, 0, 0);
+    --clr-font2: rgb(255, 254, 254);
+
+    --clr-primary-tr: hsl(240, 50%, 90%);
+    --clr-secondary-tr: rgb(255, 255, 255);
+
+    --clr-primary-hvr: hsl(240, 50%, 50%);
+    --clr-secondary-hvr: hsl(0, 100%, 40%);
+
+    --px-low: 8px;
+    --px-mid: 16px;
+    --px-high: 32px;
+
+    --clr-IT: red;
+    --clr-Management: orange;
+    --clr-Marketing: blue;
+    --clr-Sales: green;
+}
+
+
+

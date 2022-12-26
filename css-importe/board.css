@@ -1,0 +1,103 @@
+/*##################   BOARD.CSS   #########################*/
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    color: var(--clr-font1);
+    background-color: transparent;
+    flex: 1 1 20rem;
+    margin: var(--px-low);
+    border: none;
+}
+
+.card-header {
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    padding-bottom: 0;
+}
+
+.to-do-holder {
+    border-bottom-left-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    background-color: var(--clr-bg2);
+    min-height: 60vh;
+}
+
+.to-do {
+    padding: var(--px-low);
+    margin: var(--px-low);
+    border-radius: 0.2rem;
+    background-color: var(--clr-secondary-tr);
+}
+
+.board h3 {
+    margin: 0;
+    font-weight: bold;
+    border: none;
+    padding-bottom: var(--px-low);
+}
+
+.drag-area-highlight {
+    z-index: 100;
+    background-color: var(--clr-primary-tr);
+    transform: scale(1.05);
+}
+
+.board-card-usericon {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    overflow: auto;
+    max-height: 180px;
+}
+
+.board-card-usericon img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.board-card-usericon h3 {
+    font-weight: normal;
+}
+
+.board-card-department {
+    display: flex;
+    justify-content: space-between;
+    /*background-color: red;*/ 
+    padding: var(--px-low);
+    border-radius: 0.4rem;
+    margin-top: var(--px-low);
+}
+
+#show-board-details-container {
+    z-index: 100;
+    position: fixed; /*position fixed because the detail view of task shouldn't be able to scroll*/
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--clr-bg);
+    padding: var(--px-mid);
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: baseline;
+    max-height: 95vh;
+    overflow: auto;
+}
+
+.user-detail-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: var(--px-low);
+    border: 4px solid transparent;
+}
