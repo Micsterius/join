@@ -314,3 +314,11 @@
 .forgot-pw-anser-box-btn-container {
     justify-content: center !important;
 }
+
+@media screen and (max-width: 470px) {
+    .registration-request-no-icon-selected {
+        width: calc(100vw - 16px);
+    }
+}
+
+
