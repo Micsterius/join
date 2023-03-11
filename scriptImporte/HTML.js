@@ -10,7 +10,7 @@
 function renderBacklogHTML(task) {
     // Shows only the first USER! forEach cannot be reapplied
     return `
-        <tr class="backlog-hover" onclick="openAcceptTask(${task.id})">
+        <tr class="backlog-card backlog-hover" onclick="openAcceptTask('${task.id}')">
             <td style="border-left:0.4rem solid var(--clr-${task.category}">
                 <div class="assigned-to-holder">
                     <img class="backlog-responsive table-img" src="${task.user[0].icon}" alt="">
@@ -23,7 +23,7 @@ function renderBacklogHTML(task) {
             </td>
 
             <td class="category backlog-responsive">${task.category}</td>
-            <td class="details">${task.description}</td>
+            <td class="details">${task.title}</td>
         </tr>
     `
 }
@@ -39,11 +39,21 @@ function addUserInfoHTML(task) {
 
 
 function addUserIconsHTML(user) {
-    
+
     return `
         <div class="assigned-to-user">
-            <img src="${user.icon}" alt="">
+            <img onclick="showUserDetails('${user.mail}')" src="${user.icon}" alt="">
             <h3>${user.name}</h3>                  
+        </div>
+    `
+}
+
+
+function addUserIconsHTMLWithoutName(user) {
+
+    return `
+        <div class="assigned-to-user board-user-icon">
+            <img src="${user.icon}" alt="">            
         </div>
     `
 }
@@ -66,21 +76,26 @@ function colorPickerHTML(color) {
  */
 function renderToDoHTML(toDos) {
     return `
-        <div class="to-do" onclick="openTaskDetails(${toDos.id})" style="border-left: 10px solid ${toDos.color}" draggable="true" ondragstart="startDragging(${toDos["id"]})">
-            <div class="board-card-header">
+        <div class="to-do" style="border-left: 10px solid ${toDos.color}" draggable="true" ondragstart="startDragging('${toDos["id"]}')">
+        <div class="board-card-department" style="background-color: var(--clr-${toDos.category})">
+                <div>Department:</div>
+                <span>${toDos.category}</span>
+            </div>    
+
+            <div class="board-card-info-icon-box"  onclick="openTaskDetails('${toDos.id}')">
+            <img src="./img/info-icon.png">
+        </div>
+
+        <div class="board-card-header">
                 <h4>${toDos.title}</h4>
             </div>
 
             <div class="board-card-info">
                 <span>Assinged to:</span>
-                <div class="board-card-usericon" id="board-card-usericon${toDos.id}">
+                <div class="board-card-usericon user-board" id="board-card-usericon${toDos.id}">
                 </div>
             </div>
-
-            <div class="board-card-department" style="border: 5px solid var(--clr-${toDos.category})">
-                <span>Department:</span>
-                <span>${toDos.category}</span>
-            </div>
+            <img class="board-card-priority-icon" src="img/logos/icon-priority-${toDos.priority}.svg">
         </div>
     `
 }
@@ -93,21 +108,26 @@ function renderToDoHTML(toDos) {
  */
 function renderInProgressHTML(inProgress) {
     return `
-    <div class="to-do" onclick="openTaskDetails(${inProgress.id})" style="border-left: 10px solid ${inProgress.color}" draggable="true" ondragstart="startDragging(${inProgress["id"]})">
-        <div class="board-card-header">
+    <div class="to-do" style="border-left: 10px solid ${inProgress.color}" draggable="true" ondragstart="startDragging('${inProgress["id"]}')">
+        <div class="board-card-department" style="background-color: var(--clr-${inProgress.category})">
+            <div>Department:</div>
+            <span>${inProgress.category}</span>
+        </div>
+    
+        <div class="board-card-info-icon-box"  onclick="openTaskDetails('${inProgress.id}')">
+        <img src="./img/info-icon.png">
+    </div>
+
+    <div class="board-card-header">
             <h4>${inProgress.title}</h4>
         </div>
 
         <div class="board-card-info">
             <span>Assinged to:</span>
-            <div class="board-card-usericon" id="board-card-usericon${inProgress.id}">
+            <div class="board-card-usericon user-board" id="board-card-usericon${inProgress.id}">
             </div>
         </div>
-
-        <div class="board-card-department" style="border: 5px solid var(--clr-${inProgress.category})">
-            <span>Department:</span>
-            <span>${inProgress.category}</span>
-        </div>
+        <img class="board-card-priority-icon" src="img/logos/icon-priority-${inProgress.priority}.svg">
     </div>    `
 }
 
@@ -119,21 +139,26 @@ function renderInProgressHTML(inProgress) {
  */
 function renderTestingHTML(testing) {
     return `
-    <div class="to-do" onclick="openTaskDetails(${testing.id})" style="border-left: 10px solid ${testing.color}" draggable="true" ondragstart="startDragging(${testing["id"]})">
-        <div class="board-card-header">
+    <div class="to-do" style="border-left: 10px solid ${testing.color}" draggable="true" ondragstart="startDragging('${testing["id"]}')">
+    <div class="board-card-department" style="background-color: var(--clr-${testing.category})">
+            <div>Department:</div>
+            <span>${testing.category}</span>
+        </div>    
+
+        <div class="board-card-info-icon-box"  onclick="openTaskDetails('${testing.id}')">
+        <img src="./img/info-icon.png">
+    </div>
+    
+    <div class="board-card-header">
             <h4>${testing.title}</h4>
         </div>
 
         <div class="board-card-info">
             <span>Assinged to:</span>
-            <div class="board-card-usericon" id="board-card-usericon${testing.id}">
+            <div class="board-card-usericon user-board" id="board-card-usericon${testing.id}">
             </div>
         </div>
-
-        <div class="board-card-department" style="border: 5px solid var(--clr-${testing.category})">
-            <span>Department:</span>
-            <span>${testing.category}</span>
-        </div>
+        <img class="board-card-priority-icon" src="img/logos/icon-priority-${testing.priority}.svg">
     </div>    `
 }
 
@@ -145,21 +170,26 @@ function renderTestingHTML(testing) {
  */
 function renderDoneHTML(done) {
     return `
-    <div class="to-do" onclick="openTaskDetails(${done.id})" style="border-left: 10px solid ${done.color}" draggable="true" ondragstart="startDragging(${done["id"]})">
-        <div class="board-card-header">
+    <div class="to-do"style="border-left: 10px solid ${done.color}" draggable="true" ondragstart="startDragging('${done["id"]}')">
+        <div class="board-card-department" style="background-color: var(--clr-${done.category})">
+            <div>Department:</div>
+            <span>${done.category}</span>
+            </div>   
+
+        <div class="board-card-info-icon-box"  onclick="openTaskDetails('${done.id}')">
+            <img src="./img/info-icon.png">
+        </div>
+
+    <div class="board-card-header">
             <h4>${done.title}</h4>
         </div>
 
         <div class="board-card-info">
             <span>Assinged to:</span>
-            <div class="board-card-usericon" id="board-card-usericon${done.id}">
+            <div class="board-card-usericon user-board" id="board-card-usericon${done.id}">
             </div>
         </div>
-
-        <div class="board-card-department" style="border: 5px solid var(--clr-${done.category})">
-            <span>Department:</span>
-            <span>${done.category}</span>
-        </div>
+        <img class="board-card-priority-icon" src="img/logos/icon-priority-${done.priority}.svg">
     </div>    `
 }
 /////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +201,7 @@ function renderDoneHTML(done) {
 
 
 
-function renderSearchedEmployeesHTML(user, icon){
+function renderSearchedEmployeesHTML(user, icon) {
     return `
     <div class="list-search-result" id="${user}-${icon}">
     <img src="${icon}" onclick="addUserToResponsibleEmployees('${user}', '${icon}')">
@@ -180,10 +210,32 @@ function renderSearchedEmployeesHTML(user, icon){
 }
 
 
-function renderSelectedEmployeesHTML(name, img){
-    return `<div draggable="true" ondragstart="getResponsibleEmployeeForDelete('${name}', '${img}')" class="responsible-editor-container-box">
-    <img id="${name}-responsible-editor-img" class="list-search-result-img" src="${img}" onclick="showUserDetails('${name}')">
-    <div class="name-responsible-editor crop" onclick="showUserDetails('${name}')">${name}</div>
+function renderSelectedEmployeesHTML(name, img, mail) {
+    return `<div draggable="true" ondragstart="getResponsibleEmployeeForDelete('${mail}', '${img}')" class="responsible-editor-container-box">
+    <img id="${name}-responsible-editor-img" class="list-search-result-img" src="${img}" onclick="showUserDetails('${mail}')">
+    <div class="name-responsible-editor crop" onclick="showUserDetails('${mail}')">Click for infos</div>
     </div> 
     `
+}
+
+
+function renderButtonsBacklog(id) {
+    return `<button class="login-area-btn login-area-btn-guest login-btn-shadow change-task-detail-view-btn-small" onclick="deleteTask('${id}')"><span>Delete </span><img src="img/logos/icon-bin.svg" style="height: 24px; object-fit: cover; padding-bottom: 2px;"></button>
+    <button class="login-area-btn login-area-btn-login login-btn-shadow change-task-detail-view-btn-small" onclick="changeTaskBacklog('${id}')"><span>Change </span><img src="img/logos/icon-pencil.svg" style="height: 24px; object-fit: cover; padding-bottom: 2px;"></button>
+    <button class="login-area-btn login-area-btn-guest login-btn-shadow change-task-detail-view-btn-small" onclick="pushTask('${id}', '')"><span>Accept </span><img src="img/logos/icon-accept.svg" style="height: 24px; object-fit: cover; padding-bottom: 2px;"></button>`
+}
+
+
+function renderCloseIconBacklogDetailViewBox(id) {
+    return `<div class="btn-close-cross-box" onclick="closeBacklogDetails(); setChangeModeOfBacklogTaskDetailsContainerBack('${id}')">
+<img src="./img/close-icon.png">
+</div>`
+}
+
+
+function renderCloseIconBoardDetailViewBox(id) {
+    return `<div class="btn-close-cross-box"
+    onclick="closeBoardDetails(); setChangeModeOfBoardTaskDetailsContainerBack('${id}')">
+    <img src="./img/close-icon.png">
+</div>`
 }

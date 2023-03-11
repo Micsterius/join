@@ -13,8 +13,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
+    <script src="./models/task.class.js"></script>
+    <script src="./models/user.class.js"></script>
     <script src="./scriptImporte/JSON.js"></script>
     <script src="./scriptImporte/HTML.js"></script>
+    <script src="./scriptImporte/summary.js"></script>
+    <script src="./scriptImporte/contact.js"></script>
     <script src="./scriptImporte/globalScript.js"></script>
     <script src="./scriptImporte/board.js"></script>
     <script src="./scriptImporte/backlog.js"></script>
@@ -27,801 +31,146 @@
 
 </head>
 
-<body onload="init()" data-theme="default">
+<body onload="init(); includeHTML()" data-theme="default">
     <div class="modal" id="myModal">
-
+    </div>
+    <div id="loading-view" class="loading-circle-box">
+        <div class="loading-circle">
+            <span style="--i:0"></span>
+            <span style="--i:1"></span>
+            <span style="--i:2"></span>
+            <span style="--i:3"></span>
+            <span style="--i:4"></span>
+            <span style="--i:5"></span>
+            <span style="--i:6"></span>
+            <span style="--i:7"></span>
+            <span style="--i:8"></span>
+            <span style="--i:9"></span>
+            <span style="--i:10"></span>
+            <span style="--i:11"></span>
+            <span style="--i:12"></span>
+            <span style="--i:13"></span>
+        </div>
+        <img src="img/logos/join-logo-start.svg" alt="">
     </div>
 
-    <div class="side-bar" id="side-bar">
+
+    <div class="side-bar d-none" id="side-bar">
         <div class="side-bar-holder">
             <div class="nav-holder">
                 <div class="logo">
-                    <img src="img/joinlogo.png" alt="">
+                    <img src="img/logos/join-logo-white.png" alt="">
+                </div>
+                <div class="sidebar-point-container">
+                    <div class="sidebar-box-point">
+                        <img src="img/logos/uit_web-grid.svg">
+                        <h3 onclick="openSummary(); changeZPositionOfBackgroundContainerlow()">
+                            Summary</h3>
+                    </div>
+                    <div class="sidebar-box-point">
+                        <img src="img/logos/board-icon.svg">
+                        <h3 onclick="openBoard(); changeZPositionOfBackgroundContainerlow()">
+                            Board</h3>
+                    </div>
+                    <div class="sidebar-box-point">
+                        <img src="img/logos/icon-backlog.png">
+                        <h3 id="backlog-h3"
+                            onclick="openBacklog(); closeBoardAddTask(); changeStatusTaskAndLocation('toDo', 'backlog')">
+                            Backlog
+                        </h3>
+                    </div>
+                    <div class="sidebar-box-point">
+                        <img src="img/logos/write-task-icon.svg">
+                        <h3 id="add-task-h3"
+                            onclick="openAddTask(); closeBoardAddTask(); changeStatusTaskAndLocation('toDo', 'backlog')">
+                            Add
+                            Task</h3>
+                    </div>
+                    <div class="sidebar-box-point">
+                        <img src="img/logos/icon-contact.svg">
+                        <h3 id="add-task-h3"
+                            onclick="openContacts(); closeBoardAddTask(); changeStatusTaskAndLocation('toDo', 'backlog')">
+                            Contacts</h3>
+                    </div>
+                </div>
+                <div class="sidebar-box-point legal-notice-container" onclick="openImpressum()">
+                    <img src="img/logos/icon-impressum.svg" alt="">
+                    <span>Legal notice</span>
                 </div>
 
-                <h3 id="board-h3" class="active-h3" onclick="openBoard()">Board</h3>
-                <h3 id="backlog-h3" onclick="openBacklog()">Backlog</h3>
-                <h3 id="add-task-h3" onclick="openAddTask()">Add task</h3>
+                <!--
+                    <hr>
+                <h3 id="impressum-h3" onclick="openImpressum(); closeBoardAddTask()">Imprint</h3>
+                <h3 id="datenschutz-h3" onclick="openDatenschutz(); closeBoardAddTask()">Privacy</h3>
                 <hr>
-                <h3 id="help-h3" onclick="openHelp()">Help</h3>
-                <h3 id="settings-h3" onclick="openSettings()">Settings</h3>
-                <h3 id="impressum-h3" onclick="openImpressum()">Imprint</h3>
-                <h3 id="datenschutz-h3" onclick="openDatenschutz()">Privacy</h3>
-                <hr>
-                <div id="login-logout">
-                    <h3 id="login-h3" onclick="openLoginBox()">Login</h3>
-                    <h3 id="logout-h3" onclick="executeLogout()" class="d-none">Logout</h3>
-                </div>
-            </div>
-
-            <!-- MS: I created a function which load all users images automatically with the class d-none in JS. After successful Login the image of the user will be shown -->
-            <div class="user" id="user">
+-->
             </div>
         </div>
 
     </div>
 
-    <div class="main" id="main">
-        <div class="header" id="header">
-            <div class="test" id="burger" onclick="openMobileSide()">
-                <a class="burger" href="#">
-                    <div class="line1"></div>
-                    <div class="line2"></div>
-                    <div class="line3"></div>
-                </a>
-            </div>
-        </div>
+    <div w3-include-html="templates/sideBarTask.html">
 
-        <div class="d-none" id="info">
-            <h2 id="info-header">Add Task</h2>
+    </div>
 
-            <span>
-                Learning Management System Projekt
-            </span>
+
+    <div id="show-urgent-tasks-summary" class="d-none show-urgent-tasks-summary-container"
+        w3-include-html="templates/urgentTaskSummary.html">
+    </div>
+
+    <div class="main d-none" id="main">
+        <!--HEADER-->
+        <div id="header-desktop-box" class="header-desktop-box" w3-include-html="templates/header.html">
         </div>
 
         <div class="content" id="content">
-            <div class="board" id="board">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>TO DO</h3>
-                    </div>
-                    <div class="to-do-holder" id="to-do" ondrop="moveTo('to-do'); removeHighlight('to-do')"
-                        ondragover="allowDrop(event); highlight('to-do')" ondragleave="removeHighlight('to-do')">
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>IN PROGRESS</h3>
-                    </div>
-                    <div class="to-do-holder" id="in-progress"
-                        ondrop="moveTo('in-progress'); removeHighlight('in-progress')"
-                        ondragover="allowDrop(event); highlight('in-progress')"
-                        ondragleave="removeHighlight('in-progress')">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>TESTING</h3>
-                    </div>
-                    <div class="to-do-holder" id="testing" ondrop="moveTo('testing'); removeHighlight('testing')"
-                        ondragover="allowDrop(event); highlight('testing')" ondragleave="removeHighlight('testing')">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>DONE</h3>
-                    </div>
-                    <div class="to-do-holder" id="done" ondrop="moveTo('done'); removeHighlight('done')"
-                        ondragover="allowDrop(event); highlight('done')" ondragleave="removeHighlight('done')">
-                    </div>
-                </div>
-
-                <div class=" d-none" id="show-board-details-container">
-                    <div class="close-user-details-box">
-                        <div class="close-user-details" onclick="closeBoardDetails()">X</div>
-                    </div>
-
-                    <h3 id="show-board-details-box-name">Assigned to:</h3>
-
-                    <div class="assigned-to-user-holder" id="show-board-details-box-icon">
-                    </div>
-                    <table>
-                        <tr>
-                            <td>Category:</td>
-                            <td class="padding-left" id="show-board-details-box-category"></td>
-                        </tr>
-                        <tr>
-                            <td>Title:</td>
-                            <td class="padding-left" id="show-board-details-box-title"></td>
-                        </tr>
-                        <tr>
-                            <td>Created on:</td>
-                            <td class="padding-left" id="show-board-details-box-created-on"></td>
-                        </tr>
-                        <tr>
-                            <td>Complete by:</td>
-                            <td class="padding-left" id="show-board-details-box-complete-by"></td>
-                        </tr>
-                        <tr>
-                            <td>Urgency:</td>
-                            <td class="padding-left" id="show-board-details-box-urgency"></td>
-                        </tr>
-                    </table>
-
-                    <h3>Description:</h3>
-                    <span id="show-board-details-box-details" class="h100-overflow-auto">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio dignissimos non eaque?
-                    </span>
-                </div>
+            <!--SUMMARY-->
+            <div class="summary d-none" id="summary" w3-include-html="templates/summary.html">
             </div>
 
-            <div class="d-none" id="backlog">
-                <table class="table">
-                    <caption>Learning Management System Projekt</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">ASSINGED TO</th>
-                            <th scope="col" class="backlog-responsive">CATEGORY</th>
-                            <th scope="col">DETAILS</th>
-                        </tr>
-                    </thead>
-                    <tbody id="backlog-content">
-                    </tbody>
-                </table>
-
-
-                <div class=" d-none" id="show-backlog-details-container">
-                    <div class="close-user-details-box">
-                        <div class="close-user-details" onclick="closeBacklogDetails()">X</div>
-                    </div>
-
-                    <h3 id="show-backlog-details-box-name">Assigned to</h3>
-
-                    <div class="assigned-to-user-holder" id="show-backlog-details-box-icon">
-                    </div>
-                    <table>
-                        <tr>
-                            <td>Category:</td>
-                            <td class="padding-left" id="show-backlog-details-box-category"></td>
-                        </tr>
-                        <tr>
-                            <td>Title:</td>
-                            <td class="padding-left" id="show-backlog-details-box-title"></td>
-                        </tr>
-                    </table>
-
-                    <h3>Description</h3>
-                    <span id="show-backlog-details-box-details">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio dignissimos non eaque?
-                    </span>
-
-                    <div class="input-holder2">
-                        <div class="input-holder">
-                            <h3>COLOR</h3>
-
-                            <div id="color-picker-selection-box" class="margin-right color-picker-selection-box">
-                                <button type="button" onclick="showColor()" class="btn btn-info"
-                                    id="add-task-color-button">choose
-                                </button>
-                                <div class="d-none color-picker-container" id="color-picker">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="input-holder">
-                            <h3>STATUS</h3>
-
-                            <select class="form-select" id="status-list-input"
-                                aria-label="Example select with button addon">
-                                <option value="to-do">ToDo</option>
-                                <option value="in-progress">IN PROGRESS</option>
-                                <option value="testing">TESTING</option>
-                                <option value="done">DONE</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="btn-holder-backlog" id="btn-holder-backlog">
-
-                    </div>
-                </div>
+            <!--BOARD-->
+            <div id="board" class="d-none" w3-include-html="templates/board.html">
             </div>
 
-            <!-- /////////////////////////////// ADD TASK AREA START \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
-            <div class="d-none" id="add-task">
-
-                <form onsubmit="createTask(); return false">
-                    <div class="left">
-                        <div class="input-holder">
-                            <h3>TITLE</h3>
-
-                            <div>
-                                <input required type="text" placeholder="Title" id="title-task" class="form-control">
-                            </div>
-                        </div>
-                        <div class="input-holder">
-                            <h3>CATEGORY</h3>
-
-                            <div class="input-group">
-                                <select class="form-select" id="category-list-input"
-                                    aria-label="Example select with button addon">
-                                    <option value="IT">IT</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Management">Management</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-holder">
-                            <h3>DESCRIPTION:</h3>
-
-                            <!--copied from bootstrap-->
-                            <!-- Textarea with class .w-75 -->
-                            <div class="form-outline mb-4 margin-top">
-                                <textarea required class="form-control" id="task-description" rows="8"
-                                    placeholder="..."></textarea>
-                            </div>
-                            <!--copied from bootstrap-->
-                        </div>
-                    </div>
-
-                    <div class="right">
-                        <div class="input-holder">
-                            <h3>DUE DATE</h3>
-
-                            <input required class="form-control input-due-date" type="date" name="begin"
-                                placeholder="dd-mm-yyyy" value="" min="2022-01-01" max="2030-12-31" id="due-date">
-                        </div>
-
-                        <div class="input-holder">
-                            <h3>URGENCY</h3>
-
-                            <select class="form-select" id="priority-state-input"
-                                aria-label="Example select with button addon">
-                                <option value="normal">normal</option>
-                                <option value="high">high</option>
-                            </select>
-                        </div>
-
-                        <div class="input-holder">
-                            <h3>ASSINGED TO</h3>
-
-                            <div class="assinged-to">
-                                <div class="responsible-editor-list-container">
-                                    <div class="employees-holder">
-                                        <div class="btn-employees" onclick="openListOfEmployeesBoxForAddTask()">
-                                            <div class="btn-line1"></div>
-                                            <div class="btn-line2"></div>
-                                        </div>
-
-                                        <div id="responsible-editor-list" class="responsible-editor-list"
-                                            ondragover="allowDrop(event)">
-                                        </div>
-                                    </div>
-                                    <div id="responsible-editor-list-bin" ondragover="allowDrop(event)"
-                                        ondrop="moveToBin()" onclick="showHintForBin()">
-                                        <img class="add-task-img-bin" src="./img/trash-bin.svg">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="btns-add-task">
-                            <button type="button" onclick="openBoard()" class="btn-cancel">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Create Task</button>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="select-employees-container d-none" id="select-employees-container">
-                    <h2>Please select</h2>
-                    <div class="select-employees-container-list">
-                        <div class="search-bar">
-                            <div class="show-switch-text d-none" id="show-search-name-inputfield" class="d-none"
-                                onclick="showSearchInputfield('mail', 'name')">Switch to search name</div>
-                            <div class="show-switch-text" id="show-search-mail-inputfield"
-                                onclick="showSearchInputfield('name', 'mail')">Switch to search mail</div>
-                            <input class="input-search-employees" type="text" placeholder="Search for name"
-                                id="search-name" onkeyup="startSearchUser()">
-                            <input class="input-search-employees d-none" type="text" placeholder="Search for mail"
-                                id="search-mail" onkeyup="startSearchMail()">
-                        </div>
-                        <div id="add-task-editor-list" class="add-task-editor-list">
-
-                        </div>
-                    </div>
-                    <button class="btn btn-primary margin-top"
-                        onclick="closeListOfEmployeesBoxForAddTask()">Close</button>
-                </div>
-
-                <div id="add-task-bin-info-box" class="background-box d-none">
-                    <div class="registration-request-no-icon-selected">
-                        <div class="close-x-div-box">
-                            <div onclick="hideHintForBin()" class="close-x-div">X</div>
-                        </div>
-                        <h2>If you want to delete a user from the list. Drag the image over the bin and drop it.</h2>
-                    </div>
-                </div>
+            <!--BOARD DETAIL VIEW-->
+            <div class=" d-none" id="show-board-details-container" w3-include-html="templates/boardDetailView.html">
             </div>
 
+            <!--BACKLOG-->
+            <div class="d-none" id="backlog" w3-include-html="templates/backlog.html"></div>
 
-            <!-- ----------------------------- ADD TASK AREA END ----------------------------- -->
-
-            <div class="d-none" id="help">
-
-                <div class="help-card margin-bottom-12">
-                    <h2>What is Kanban?</h2>
-                    <p>Kanban is a scheduling system for lean manufacturing. Our Join has three important areas.</p>
-                </div>
-
-                <div class="help-card margin-bottom-12">
-                    <h2>Add Task</h2>
-                    <p>Here you can create a new task. The inputfields "Title", "Description" and "Due date" are
-                        obligatory. Under "Category"
-                        you can chose between IT, Sales, Marketing and Management. Also the "Urgency" and the current
-                        "Status" is adjustable.
-                        By clicking on the "+" under the "ASSINGED TO" you are able to add colleagues or other persons
-                        who are responsible for
-                        this task. You can search by username or by mail. It is possible to dismiss persons from the
-                        list per drag and drop over
-                        the bin icon. By clicking on the "Create Task" Button your task will be pushed in the Backlog
-                        area.</p>
-                </div>
-
-                <div class="help-card margin-bottom-12">
-                    <h2>Backlog</h2>
-                    <p>Here you have a list with all tasks which are created. There you can decide which task you want
-                        on your board. Click on the card
-                        to see the details of the card. In the detailed view you have on the bottom a button "Accept
-                        Task". After click on this button
-                        you will see your task on the board.</p>
-                </div>
-
-                <div class="help-card margin-bottom-12">
-                    <h2>Board</h2>
-                    <p>Here you can change the status of your task according the working step. Drag the box with the
-                        task which you are working on from
-                        "TO DO" to "IN PROGRESS" or on the step you are.</p>
-                </div>
-                <a href="https://youtu.be/awd9SJdOcUs" target="_blank" class="btn btn-info">Short Youtube Video</a>
-
+            <!--BACKLOG DETAIL VIEW-->
+            <div class=" d-none" id="show-backlog-details-container" w3-include-html="templates/backlogDetailView.html">
             </div>
 
-            <div class="d-none" id="settings">
-                <div class="theme-holder">
-                    <h2>Choose yor theme</h2>
-                    <div class="theme-select">
-                        <button onclick="setTheme('default')" data-theme="" class="theme-switch">Default</button>
-                        <button onclick="setTheme('dark')" data-theme="theme-dark" class="theme-switch">Dark</button>
-                        <button onclick="setTheme('neon')" data-theme="theme-neon" class="theme-switch">Neon</button>
-                    </div>
-                </div>
+            <!--ADD TASK-->
+            <div class="d-none" id="add-task" w3-include-html="templates/addTask.html"></div>
+
+            <!--SELECT USER-->
+            <div class="select-employees-container d-none" id="select-employees-container"
+                w3-include-html="templates/selectUser.html">
             </div>
 
-            <div class="d-none" id="impressum">
-                <h1>Impressum</h1>
-                <p>Angaben gemäß § 5 TMG</p>
-                <p>Michael Strauß <br>
-                    Föhrenstraße 6<br>
-                    90766 Fürth <br>
-                </p>
-                <p> <strong>Vertreten durch: </strong><br>
-                    Michael Strauß<br>
-                </p>
-                <p><strong>Kontakt:</strong> <br>
-                    Telefon: 0157-86771555<br>
-                    E-Mail: <a href='mailto:strauss.michael@gmx.net'>strauss.michael@gmx.net</a></br></p>
-                <p><strong>Haftungsausschluss: </strong><br><br><strong>Haftung für Inhalte</strong><br><br>
-                    Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
-                    Vollständigkeit und
-                    Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir
-                    gemäß
-                    § 7 Abs.1
-                    TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8
-                    bis
-                    10 TMG sind
-                    wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
-                    Informationen zu
-                    überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-                    Verpflichtungen zur
-                    Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben
-                    hiervon
-                    unberührt.
-                    Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten
-                    Rechtsverletzung
-                    möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte
-                    umgehend
-                    entfernen.<br><br><strong>Haftung für Links</strong><br><br>
-                    Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss
-                    haben. Deshalb
-                    können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
-                    verlinkten
-                    Seiten ist
-                    stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten
-                    wurden
-                    zum
-                    Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum
-                    Zeitpunkt der
-                    Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist
-                    jedoch
-                    ohne konkrete
-                    Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen
-                    werden
-                    wir
-                    derartige Links umgehend entfernen.<br><br><strong>Datenschutz</strong><br><br>
-                    Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich.
-                    Soweit
-                    auf unseren
-                    Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben
-                    werden,
-                    erfolgt dies,
-                    soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche
-                    Zustimmung
-                    nicht an
-                    Dritte weitergegeben. <br>
-                    Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per
-                    E-Mail)
-                    Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte
-                    ist
-                    nicht
-                    möglich. <br>
-                    Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur
-                    Übersendung von
-                    nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich
-                    widersprochen.
-                    Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der
-                    unverlangten
-                    Zusendung von
-                    Werbeinformationen, etwa durch Spam-Mails, vor.<br>
-                </p><br>
-                Impressum vom <a href="https://www.impressum-generator.de">Impressum Generator</a> der <a
-                    href="https://www.kanzlei-hasselbach.de/">Kanzlei Hasselbach, Rechtsanwälte für Arbeitsrecht und
-                    Familienrecht</a>
+            <!--CONTACTS-->
+            <div class="d-none" id="contacts" w3-include-html="templates/contact.html">
             </div>
 
-            <div class="d-none" id="datenschutz">
-                <h1>Datenschutzerklärung</h1>
-                <h2 id="m14">Einleitung</h2>
-                <p>Mit der folgenden Datenschutzerklärung möchten wir Sie darüber aufklären, welche Arten Ihrer
-                    personenbezogenen Daten (nachfolgend auch kurz als "Daten“ bezeichnet) wir zu welchen Zwecken
-                    und in
-                    welchem Umfang verarbeiten. Die Datenschutzerklärung gilt für alle von uns durchgeführten
-                    Verarbeitungen personenbezogener Daten, sowohl im Rahmen der Erbringung unserer Leistungen als
-                    auch
-                    insbesondere auf unseren Webseiten, in mobilen Applikationen sowie innerhalb externer
-                    Onlinepräsenzen, wie z.B. unserer Social-Media-Profile (nachfolgend zusammenfassend bezeichnet
-                    als
-                    "Onlineangebot“).</p>
-                <p>Die verwendeten Begriffe sind nicht geschlechtsspezifisch.</p>
-                <p>Stand: 2. Juli 2022</p>
-                <h2>Inhaltsübersicht</h2>
-                <ul class="index">
-                    <li><a class="index-link" href="#m14">Einleitung</a></li>
-                    <li><a class="index-link" href="#m3">Verantwortlicher</a></li>
-                    <li><a class="index-link" href="#mOverview">Übersicht der Verarbeitungen</a></li>
-                    <li><a class="index-link" href="#m13">Maßgebliche Rechtsgrundlagen</a></li>
-                    <li><a class="index-link" href="#m27">Sicherheitsmaßnahmen</a></li>
-                    <li><a class="index-link" href="#m12">Löschung von Daten</a></li>
-                    <li><a class="index-link" href="#m225">Bereitstellung des Onlineangebotes und Webhosting</a>
-                    </li>
-                    <li><a class="index-link" href="#m42">Begriffsdefinitionen</a></li>
-                </ul>
-                <h2 id="m3">Verantwortlicher</h2>
-                <p>Michael Strauß<br>Föhrenstraße 6<br>90766 Fürth</p>
-                E-Mail-Adresse: <p><a href="mailto:strauss.michael@gmx.net">strauss.michael@gmx.net</a></p>
-                <h2 id="mOverview">Übersicht der Verarbeitungen</h2>
-                <p>Die nachfolgende Übersicht fasst die Arten der verarbeiteten Daten und die Zwecke ihrer
-                    Verarbeitung
-                    zusammen und verweist auf die betroffenen Personen.</p>
-                <h3>Arten der verarbeiteten Daten</h3>
-                <ul>
-                    <li>Inhaltsdaten.</li>
-                    <li>Nutzungsdaten.</li>
-                    <li>Meta-/Kommunikationsdaten.</li>
-                </ul>
-                <h3>Kategorien betroffener Personen</h3>
-                <ul>
-                    <li>Nutzer.</li>
-                </ul>
-                <h3>Zwecke der Verarbeitung</h3>
-                <ul>
-                    <li>Bereitstellung unseres Onlineangebotes und Nutzerfreundlichkeit.</li>
-                    <li>Informationstechnische Infrastruktur.</li>
-                </ul>
-                <h3 id="m13">Maßgebliche Rechtsgrundlagen</h3>
-                <p>Im Folgenden erhalten Sie eine Übersicht der Rechtsgrundlagen der DSGVO, auf deren Basis wir
-                    personenbezogene Daten verarbeiten. Bitte nehmen Sie zur Kenntnis, dass neben den Regelungen der
-                    DSGVO nationale Datenschutzvorgaben in Ihrem bzw. unserem Wohn- oder Sitzland gelten können.
-                    Sollten
-                    ferner im Einzelfall speziellere Rechtsgrundlagen maßgeblich sein, teilen wir Ihnen diese in der
-                    Datenschutzerklärung mit.</p>
-                <ul>
-                    <li><strong>Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO)</strong> - Die
-                        Verarbeitung
-                        ist zur Wahrung der berechtigten Interessen des Verantwortlichen oder eines Dritten
-                        erforderlich, sofern nicht die Interessen oder Grundrechte und Grundfreiheiten der
-                        betroffenen
-                        Person, die den Schutz personenbezogener Daten erfordern, überwiegen.</li>
-                </ul>
-                <p>Zusätzlich zu den Datenschutzregelungen der Datenschutz-Grundverordnung gelten nationale
-                    Regelungen
-                    zum Datenschutz in Deutschland. Hierzu gehört insbesondere das Gesetz zum Schutz vor Missbrauch
-                    personenbezogener Daten bei der Datenverarbeitung (Bundesdatenschutzgesetz – BDSG). Das BDSG
-                    enthält
-                    insbesondere Spezialregelungen zum Recht auf Auskunft, zum Recht auf Löschung, zum
-                    Widerspruchsrecht, zur Verarbeitung besonderer Kategorien personenbezogener Daten, zur
-                    Verarbeitung
-                    für andere Zwecke und zur Übermittlung sowie automatisierten Entscheidungsfindung im Einzelfall
-                    einschließlich Profiling. Des Weiteren regelt es die Datenverarbeitung für Zwecke des
-                    Beschäftigungsverhältnisses (§ 26 BDSG), insbesondere im Hinblick auf die Begründung,
-                    Durchführung
-                    oder Beendigung von Beschäftigungsverhältnissen sowie die Einwilligung von Beschäftigten. Ferner
-                    können Landesdatenschutzgesetze der einzelnen Bundesländer zur Anwendung gelangen.</p>
-                <h2 id="m27">Sicherheitsmaßnahmen</h2>
-                <p>Wir treffen nach Maßgabe der gesetzlichen Vorgaben unter Berücksichtigung des Stands der Technik,
-                    der
-                    Implementierungskosten und der Art, des Umfangs, der Umstände und der Zwecke der Verarbeitung
-                    sowie
-                    der unterschiedlichen Eintrittswahrscheinlichkeiten und des Ausmaßes der Bedrohung der Rechte
-                    und
-                    Freiheiten natürlicher Personen geeignete technische und organisatorische Maßnahmen, um ein dem
-                    Risiko angemessenes Schutzniveau zu gewährleisten.</p>
-                <p>Zu den Maßnahmen gehören insbesondere die Sicherung der Vertraulichkeit, Integrität und
-                    Verfügbarkeit
-                    von Daten durch Kontrolle des physischen und elektronischen Zugangs zu den Daten als auch des
-                    sie
-                    betreffenden Zugriffs, der Eingabe, der Weitergabe, der Sicherung der Verfügbarkeit und ihrer
-                    Trennung. Des Weiteren haben wir Verfahren eingerichtet, die eine Wahrnehmung von
-                    Betroffenenrechten, die Löschung von Daten und Reaktionen auf die Gefährdung der Daten
-                    gewährleisten. Ferner berücksichtigen wir den Schutz personenbezogener Daten bereits bei der
-                    Entwicklung bzw. Auswahl von Hardware, Software sowie Verfahren entsprechend dem Prinzip des
-                    Datenschutzes, durch Technikgestaltung und durch datenschutzfreundliche Voreinstellungen.</p>
-                <p>SSL-Verschlüsselung (https): Um Ihre via unserem Online-Angebot übermittelten Daten zu schützen,
-                    nutzen wir eine SSL-Verschlüsselung. Sie erkennen derart verschlüsselte Verbindungen an dem
-                    Präfix
-                    https:// in der Adresszeile Ihres Browsers.</p>
-                <h2 id="m12">Löschung von Daten</h2>
-                <p>Die von uns verarbeiteten Daten werden nach Maßgabe der gesetzlichen Vorgaben gelöscht, sobald
-                    deren
-                    zur Verarbeitung erlaubten Einwilligungen widerrufen werden oder sonstige Erlaubnisse entfallen
-                    (z.B. wenn der Zweck der Verarbeitung dieser Daten entfallen ist oder sie für den Zweck nicht
-                    erforderlich sind). Sofern die Daten nicht gelöscht werden, weil sie für andere und gesetzlich
-                    zulässige Zwecke erforderlich sind, wird deren Verarbeitung auf diese Zwecke beschränkt. D.h.,
-                    die
-                    Daten werden gesperrt und nicht für andere Zwecke verarbeitet. Das gilt z.B. für Daten, die aus
-                    handels- oder steuerrechtlichen Gründen aufbewahrt werden müssen oder deren Speicherung zur
-                    Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer
-                    anderen natürlichen oder juristischen Person erforderlich ist. </p>
-                <p>Unsere Datenschutzhinweise können ferner weitere Angaben zu der Aufbewahrung und Löschung von
-                    Daten
-                    beinhalten, die für die jeweiligen Verarbeitungen vorrangig gelten.</p>
-                <h2 id="m225">Bereitstellung des Onlineangebotes und Webhosting</h2>
-                <p>Um unser Onlineangebot sicher und effizient bereitstellen zu können, nehmen wir die Leistungen
-                    von
-                    einem oder mehreren Webhosting-Anbietern in Anspruch, von deren Servern (bzw. von ihnen
-                    verwalteten
-                    Servern) das Onlineangebot abgerufen werden kann. Zu diesen Zwecken können wir Infrastruktur-
-                    und
-                    Plattformdienstleistungen, Rechenkapazität, Speicherplatz und Datenbankdienste sowie
-                    Sicherheitsleistungen und technische Wartungsleistungen in Anspruch nehmen.</p>
-                <p>Zu den im Rahmen der Bereitstellung des Hostingangebotes verarbeiteten Daten können alle die
-                    Nutzer
-                    unseres Onlineangebotes betreffenden Angaben gehören, die im Rahmen der Nutzung und der
-                    Kommunikation anfallen. Hierzu gehören regelmäßig die IP-Adresse, die notwendig ist, um die
-                    Inhalte
-                    von Onlineangeboten an Browser ausliefern zu können, und alle innerhalb unseres Onlineangebotes
-                    oder
-                    von Webseiten getätigten Eingaben.</p>
-                <ul class="m-elements">
-                    <li><strong>Verarbeitete Datenarten:</strong> Inhaltsdaten (z.B. Eingaben in Onlineformularen);
-                        Nutzungsdaten (z.B. besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten);
-                        Meta-/Kommunikationsdaten (z.B. Geräte-Informationen, IP-Adressen).</li>
-                    <li><strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von
-                        Onlinediensten).</li>
-                    <li><strong>Zwecke der Verarbeitung:</strong> Bereitstellung unseres Onlineangebotes und
-                        Nutzerfreundlichkeit; Informationstechnische Infrastruktur (Betrieb und Bereitstellung von
-                        Informationssystemen und technischen Geräten (Computer, Server etc.).).</li>
-                    <li><strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f.
-                        DSGVO).
-                    </li>
-                </ul>
-                <p><strong>Weitere Hinweise zu Verarbeitungsprozessen, Verfahren und Diensten:</strong></p>
-                <ul class="m-elements">
-                    <li><strong>Erhebung von Zugriffsdaten und Logfiles: </strong>Wir selbst (bzw. unser
-                        Webhostinganbieter) erheben Daten zu jedem Zugriff auf den Server (sogenannte
-                        Serverlogfiles).
-                        Zu den Serverlogfiles können die Adresse und Name der abgerufenen Webseiten und Dateien,
-                        Datum
-                        und Uhrzeit des Abrufs, übertragene Datenmengen, Meldung über erfolgreichen Abruf,
-                        Browsertyp
-                        nebst Version, das Betriebssystem des Nutzers, Referrer URL (die zuvor besuchte Seite) und
-                        im
-                        Regelfall IP-Adressen und der anfragende Provider gehören.
+            <!--HELP-->
+            <div class="d-none" id="help" w3-include-html="templates/help.html">
+            </div>
 
-                        Die Serverlogfiles können zum einen zu Zwecken der Sicherheit eingesetzt werden, z.B., um
-                        eine
-                        Überlastung der Server zu vermeiden (insbesondere im Fall von missbräuchlichen Angriffen,
-                        sogenannten DDoS-Attacken) und zum anderen, um die Auslastung der Server und ihre Stabilität
-                        sicherzustellen; <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S.
-                        1
-                        lit. f. DSGVO); <strong>Löschung von Daten:</strong> Logfile-Informationen werden für die
-                        Dauer
-                        von maximal 30 Tagen gespeichert und danach gelöscht oder anonymisiert. Daten, deren weitere
-                        Aufbewahrung zu Beweiszwecken erforderlich ist, sind bis zur endgültigen Klärung des
-                        jeweiligen
-                        Vorfalls von der Löschung ausgenommen.</li>
-                </ul>
-                <h2 id="m42">Begriffsdefinitionen</h2>
-                <p>In diesem Abschnitt erhalten Sie eine Übersicht über die in dieser Datenschutzerklärung
-                    verwendeten
-                    Begrifflichkeiten. Viele der Begriffe sind dem Gesetz entnommen und vor allem im Art. 4 DSGVO
-                    definiert. Die gesetzlichen Definitionen sind verbindlich. Die nachfolgenden Erläuterungen
-                    sollen
-                    dagegen vor allem dem Verständnis dienen. Die Begriffe sind alphabetisch sortiert.</p>
-                <ul class="glossary">
-                    <li><strong>Personenbezogene Daten:</strong> "Personenbezogene Daten“ sind alle Informationen,
-                        die
-                        sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden
-                        "betroffene
-                        Person“) beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt
-                        oder
-                        indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer
-                        Kennnummer,
-                        zu Standortdaten, zu einer Online-Kennung (z.B. Cookie) oder zu einem oder mehreren
-                        besonderen
-                        Merkmalen identifiziert werden kann, die Ausdruck der physischen, physiologischen,
-                        genetischen,
-                        psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person
-                        sind. </li>
-                    <li><strong>Verantwortlicher:</strong> Als "Verantwortlicher“ wird die natürliche oder
-                        juristische
-                        Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über
-                        die
-                        Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet, bezeichnet.
-                    </li>
-                    <li><strong>Verarbeitung:</strong> "Verarbeitung" ist jeder mit oder ohne Hilfe automatisierter
-                        Verfahren ausgeführte Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit
-                        personenbezogenen Daten. Der Begriff reicht weit und umfasst praktisch jeden Umgang mit
-                        Daten,
-                        sei es das Erheben, das Auswerten, das Speichern, das Übermitteln oder das Löschen. </li>
-                </ul>
-                <p class="seal"><a href="https://datenschutz-generator.de/"
-                        title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken." target="_blank"
-                        rel="noopener noreferrer nofollow">Erstellt mit kostenlosem
-                        Datenschutz-Generator.de von Dr.
-                        Thomas Schwenke</a></p>
+            <!--IMPRESSUM-->
+            <div class="d-none" id="impressum" w3-include-html="templates/impressum.html">
             </div>
         </div>
 
-        <div class="log-in-box">
-            <!-- /////////////////////////////// Login START \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\-->
-            <div id="login-container" class="background-box">
-                <div id="login" class="registration-box-input">
-                    <h2>Login</h2>
-                    <form onsubmit="checkLoginParameters(); return false" class="login-input-fields">
-                        <input required id="login-user-inputfield" type="text" name="User" list="all-users"
-                            placeholder="User">
-                        <datalist id="all-users">
-                        </datalist>
-                        <input required id="login-user-inputfield-pw" type="password" placeholder="Password">
-                        <div class="registration-buttons margin-bottom">
-                            <div onclick="loginAsTestuser()" class="btn btn-primary">Testuser</div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                    <div>
-                        <button onclick="openRegisterBox()" id="registration-btn"
-                            class="btn btn-primary">Registration</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="registration-box" class="background-box d-none">
-                <form onsubmit="checkPasswortInRegestrationProcess(); return false">
-                    <div class="registration-box-input">
-                        <h2>Registration</h2>
-                        <input maxlength="30" required id="new-user-inputfield-login" type="text" placeholder="Name">
-                        <input required id="new-user-inputfield-pw" type="password" placeholder="Password">
-                        <input required type="password" placeholder="Repeat password"
-                            id="new-user-inputfield-pw-repeat">
-                        <div class="show-switch-text" id="new-user-registration-input-more" class="search-switch-text"
-                            onclick="showMoreRegistrationInput()">more ></div>
-                        <div id="registration-box-input-more" class="registration-box-input-more d-none">
-                            <input type="text" placeholder="Category like Sales or IT"
-                                id="new-user-inputfield-category">
-                            <input type="email" placeholder="Your E-Mail ...@..." id="new-user-inputfield-mail">
-                            <input type="tel" placeholder="012586165127" id="new-user-inputfield-tel">
-                            <input type="text" placeholder="Residence" id="new-user-inputfield-city">
-                            <input type="text" placeholder="Hobby" id="new-user-inputfield-hobby">
-                        </div>
-                        <div>
-                            <input type="checkbox" onclick="showPassword()"> Show Password
-                        </div>
-                        <div class="icon-container">
-                            <div onclick="openWindowIconSelection()" class="btn btn-primary">Icons</div>
-                            <div id="icon-box" class="icons-box">
-                                <img src="./img/icon-unknown.svg">
-                            </div>
-                        </div>
-                        <div class="registration-buttons">
-                            <button type="button" onclick="closeRegisterBox()" class="btn btn-primary">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div id="registration-request-no-icon-selected-box" class="background-box d-none">
-                <div class="registration-request-no-icon-selected">
-                    <h2>Do you want to take the "Unknown Avatar" as icon?</h2>
-                    <div>
-                        <button class="btn btn-primary" onclick="closeAskForIconSelection()">No</button>
-                        <button class="btn btn-primary" onclick="submitNewUserWithUnknownIcon()">Yes</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ## Registration Alert Wrong Password Entry ## -->
-            <div id="registration-check-password-alert" class="background-box d-none">
-                <div class="registration-request-no-icon-selected">
-                    <h2>Please check your password entry</h2>
-                </div>
-            </div>
-            <!-- ## Registration Alert Wrong Password Entry ## -->
-            <div id="registration-ready-for-login-alert" class="background-box d-none">
-                <div class="registration-request-no-icon-selected">
-                    <h2>Ready for Login</h2>
-                </div>
-            </div>
-            <!-- ## Registration Alert User already exist ## -->
-            <div id="registration-user-already-exist-alert" class="background-box d-none">
-                <div class="registration-request-no-icon-selected">
-                    <h2>User already exist</h2>
-                </div>
-            </div>
-            <!-- ## Login Alert There is no User with this name ## -->
-            <div id="registration-wrung-username-alert" class="background-box d-none">
-                <div class="registration-request-no-icon-selected">
-                    <h2>Wrong Username. This user does not exist.</h2>
-                </div>
-            </div>
-            <!-- ----------------------------- Login END ----------------------------- -->
+        <!--LOGIN-->
+        <div class="log-in-box" w3-include-html="templates/login.html">
         </div>
 
-            <div class="show-user-details-box d-none" id="show-user-details-container">
-                <div class="close-user-details-box">
-                    <div class="close-user-details" onclick="closeUserDetailsView()">X</div>
-                </div>
-
-                <h2 id="show-user-details-box-name"></h2>
-                <img id="show-user-details-box-icon" class="user-detail-img" src="" alt="">
-                <table>
-                    <tr>
-                        <td>Mail:</td>
-                        <td class="padding-left" id="show-user-details-box-mail"></td>
-                    </tr>
-                    <tr>
-                        <td>Phone-Number:</td>
-                        <td class="padding-left" id="show-user-details-box-tel"></td>
-                    </tr>
-                    <tr>
-                        <td>Department:</td>
-                        <td class="padding-left" id="show-user-details-box-category"></td>
-                    </tr>
-                    <tr>
-                        <td>Residence:</td>
-                        <td class="padding-left" id="show-user-details-box-city"></td>
-                    </tr>
-                    <tr>
-                        <td>Hobby:</td>
-                        <td class="padding-left" id="show-user-details-box-hobby"></td>
-                    </tr>
-                </table>
-            </div>
+        <div class="show-user-details-box d-none" id="show-user-details-container"
+            w3-include-html="templates/showUserDetails.html">
+        </div>
     </div>
 </body>
 

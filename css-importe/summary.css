@@ -1,0 +1,525 @@
+.summary-overview-container-one {
+    display: flex;
+    align-items: center;
+    height: 140px;
+}
+
+.summary-overview-sub-container-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 100%;
+    background-color: white;
+    margin-right: 24px;
+    border-radius: 16px;
+}
+
+.summary-overview-sub-container-one-text {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+}
+
+.summary-nbr-task {
+    font-size: 44px;
+    line-height: 56px;
+    font-weight: 600;
+}
+
+.summary-urgent-container-one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.summary-urgent-container-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-left: 1px solid lightgray;
+}
+
+.summary-urgent-container-one img {
+    height: 70px;
+    object-fit: cover;
+    margin-right: 24px;
+}
+
+.summary-overview-sub-container-two {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    width: 632px;
+    height: 140px;
+    margin-top: 24px;
+    border-radius: 16px;
+}
+
+.summary-overview-sub-container-two:hover {
+    cursor: pointer;
+    border: 1px solid var(--clr-primary);
+}
+
+.summary-urgent-sub-container-one {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-sub-container-three {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 140px;
+    background-color: white;
+}
+
+.summary-overview-container-three {
+    margin-top: 24px;
+    display: flex;
+    height: 140px;
+}
+
+.summary-overview-container-three img {
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.summary-overview-sub-container-three {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    background-color: white;
+    margin-right: 24px;
+    border-radius: 16px;
+}
+
+.summary-main-container {
+    display: flex;
+    align-items: center;
+}
+
+.summary-greeting-container {
+    font-size: 64px;
+    font-weight: 600;
+    margin-left: 60px;
+}
+
+.summary-name {
+    font-size: 80px !important;
+}
+
+.summary-overview-main-container {
+    margin-left: 60px;
+}
+
+.text-summary-container-overview-decision {
+    color: var(--clr-secondary);
+    display: flex;
+    margin-left: 60px;
+    margin-bottom: 32px;
+    margin-top: -32px;
+}
+
+.text-summary-container-overview-decision div {
+    margin-right: 24px;
+    font-size: 18px;
+}
+
+.text-summary-container-overview-decision div:hover {
+    cursor: pointer;
+    color: var(--clr-primary);
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.show-urgent-tasks-summary-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 50;
+    width: 500px;
+    min-height: 350px;
+    height: 80vh;
+    max-height: 640px;
+    border: 2px solid var(--clr-secondary);
+    border-radius: 24px;
+    padding: var(--px-mid);
+}
+
+.show-urgent-tasks-summary-container-table {
+    overflow: auto;
+    min-height: 246px;
+    height: calc(80vh - 150px);
+    max-height: 500px;
+}
+
+.mg-urgent-headline-12 {
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.assigned-to-summary {
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.assigned-to-summary h3 {
+    padding: 0;
+    margin-bottom: 4px;
+}
+
+@media screen and (max-width: 1300px) {
+    .summary-overview-container-one {
+        height: 120px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 120px;
+    }
+
+    .summary-overview-sub-container-three {
+        width: 180px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 552px;
+        height: 120px;
+    }
+
+    .summary-overview-container-three {
+        height: 120px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .summary-overview-container-one {
+        height: 100px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 100px;
+    }
+
+    .summary-overview-sub-container-three {
+        width: 160px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 472px;
+        height: 100px;
+    }
+
+    .summary-overview-container-three {
+        height: 100px;
+    }
+
+    .summary-nbr-task {
+        font-size: 36px;
+        line-height: 44px;
+    }
+
+    .summary-overview-sub-container-one-text {
+        line-height: 20px;
+        font-size: 16px;
+    }
+
+    .summary-greeting-container {
+        margin-left: 40px;
+    }
+
+    .summary-greeting-container-pre {
+        font-size: 52px !important;
+    }
+
+    .summary-name {
+        font-size: 64px !important;
+    }
+
+    .summary-urgent-container-one img {
+        height: 60px;
+    }
+
+    .summary-overview-container-three img {
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .summary-overview-container-one {
+        height: 90px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 90px;
+    }
+
+    .summary-overview-sub-container-three {
+        width: 130px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 432px;
+        height: 90px;
+    }
+
+    .summary-overview-container-three {
+        height: 90px;
+    }
+
+    .summary-nbr-task {
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    .summary-overview-sub-container-one-text {
+        line-height: 20px;
+        font-size: 16px;
+    }
+
+    .summary-greeting-container {
+        margin-left: 20px;
+    }
+
+    .summary-urgent-container-one img {
+        height: 50px;
+    }
+
+    .summary-overview-container-three img {
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .summary-overview-container-one {
+        height: 80px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 80px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 392px;
+        height: 80px;
+    }
+
+    .summary-overview-container-three {
+        height: 80px;
+    }
+
+    .summary-nbr-task {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .summary-overview-sub-container-one-text {
+        line-height: 20px;
+        font-size: 16px;
+    }
+
+    .summary-urgent-container-one img {
+        height: 40px;
+    }
+
+    .summary-overview-container-three img {
+        height: 40px;
+    }
+
+    .summary-name {
+        font-size: 52px !important;
+    }
+
+    .summary-greeting-container-pre {
+        font-size: 42px !important;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .summary-main-container {
+        flex-direction: column-reverse;
+        align-items: start;
+    }
+
+    .summary-greeting-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-left: 40px;
+        margin-bottom: 20px;
+        width: 320px;
+    }
+
+    .contact-detail-headline {
+        margin-left: 40px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .summary-overview-main-container {
+        margin-left: 40px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .show-urgent-tasks-summary-container {
+        width: calc(100vw - 36px);
+    }
+
+    .assigned-to-summary{
+        width: 90px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .assigned-to-summary{
+        width: 80px;
+    }
+
+    .summary-overview-sub-container-one {
+        height: 70px;
+        margin-right: 12px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 70px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 316px;
+        height: 70px;
+    }
+
+    .summary-overview-container-three {
+        height: 70px;
+    }
+
+    .summary-nbr-task {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .summary-overview-sub-container-one-text {
+        line-height: 18px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .assigned-to-summary{
+        width: 60px;
+    }
+
+    .contact-detail-headline div {
+        display: none;
+    }
+
+    .summary-name {
+        font-size: 42px !important;
+    }
+
+    .summary-greeting-container-pre {
+        font-size: 32px !important;
+    }
+
+    .summary-greeting-container {
+        width: 240px;
+        margin-left: 20px;
+    }
+
+    .contact-detail-headline {
+        margin-left: 20px;
+    }
+
+    .summary-overview-main-container {
+        margin-left: 20px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .summary-greeting-container {
+        margin-left: 12px;
+    }
+
+    .contact-detail-headline {
+        margin-left: 12px;
+    }
+
+    .summary-overview-main-container {
+        margin-left: 12px;
+    }
+
+    .summary-overview-sub-container-one {
+        height: 65px;
+        margin-right: 6px;
+    }
+
+    .summary-overview-sub-container-one {
+        width: 65px;
+    }
+
+    .summary-overview-sub-container-two {
+        width: 278px;
+        height: 65px;
+    }
+
+    .summary-overview-container-three {
+        height: 65px;
+    }
+
+    .summary-nbr-task {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .summary-overview-sub-container-one-text {
+        line-height: 18px;
+        font-size: 14px;
+    }
+
+    .summary-urgent-container-one {
+        width: 120px;
+    }
+
+    .summary-urgent-container-one img {
+        margin-right: 12px;
+    }
+
+    .summary-urgent-container-two {
+        width: 160px;
+    }
+
+    .summary-overview-sub-container-three {
+        margin-right: 12px;
+    }
+}
+
+@media screen and (max-height: 760px) {
+    .show-urgent-tasks-summary-container-table {
+        min-height: 246px;
+        height: calc(80vh - 130px);
+        max-height: 500px;
+    }
+}
+
+@media screen and (max-height: 460px) {
+    .show-urgent-tasks-summary-container-table {
+        min-height: 215px;
+    }
+}

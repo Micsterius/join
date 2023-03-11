@@ -1,96 +1,85 @@
 function openBoard() {
-    closeAllContent()
-    document.getElementById('info').className = 'd-none'
-    document.getElementById('board').className = 'board'
-    document.getElementById('board-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Board</h2>`
+    closeAllContent();
+    document.getElementById('board').classList.remove('d-none');
+    setTemporaryArrayResponsibleEmployeesToStandard();
 }
 
 
 function openBacklog() {
-    closeAllContent()
-    document.getElementById('backlog').className = 'backlog'
-    document.getElementById('backlog-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Backlog</h2>`
+    closeAllContent();
+    document.getElementById('backlog').classList.remove('d-none');
+    setTemporaryArrayResponsibleEmployeesToStandard();
 }
 
 
 function openAddTask() {
-    closeAllContent()
-    document.getElementById('add-task').className = 'add-task'
-    document.getElementById('add-task-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Add Task</h2>`
+    closeAllContent();
+    document.getElementById('add-task').classList.remove('d-none');
+    setTemporaryArrayResponsibleEmployeesToStandard();
+}
 
+function openContact() {
+    //
 }
 
 
 function openHelp() {
     closeAllContent()
-    document.getElementById('help').className = 'help'
-    document.getElementById('help-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Help</h2>`
+    document.getElementById('help').classList.remove('d-none');
 }
 
 
 function openSettings() {
-    closeAllContent()
-    document.getElementById('settings').className = 'settings'
-    document.getElementById('settings-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Settings</h2>`
+    closeAllContent();
+    document.getElementById('settings').classList.remove('d-none');
 }
 
 
 function openImpressum() {
-    closeAllContent()
-    document.getElementById('impressum').className = 'impressum'
-    document.getElementById('impressum-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Impressum</h2>`
+    closeAllContent();
+    document.getElementById('impressum').classList.remove('d-none');
 }
 
 
 function openDatenschutz() {
-    closeAllContent()
-    document.getElementById('datenschutz').className = 'datenschutz'
-    document.getElementById('datenschutz-h3').className = 'active-h3'
-    document.getElementById('info-header').innerHTML = `<h2>Datenschutz</h2>`
+    closeAllContent();
+    document.getElementById('datenschutz').classList.remove('d-none');
+}
+
+
+function openContacts() {
+    closeAllContent();
+    document.getElementById('contacts').classList.remove('d-none');
+    loadUserListForContacts();
+}
+
+
+function openSummary() {
+    closeAllContent();
+    document.getElementById('summary').classList.remove('d-none');
+    loadSummaryContent();
 }
 
 
 function closeAllContent() {
-    document.getElementById('myModal').classList.remove('d-block')
-    document.getElementById('show-board-details-container').classList.add('d-none')
-    document.getElementById('info').className = 'info-header'
+    document.getElementById('myModal').classList.remove('d-block');
+    document.getElementById('show-board-details-container').classList.add('d-none');
     document.getElementById('side-bar').classList.remove('active-mobile-side');
     document.getElementById('burger').classList.remove('toggle');
-    document.getElementById('show-backlog-details-container').classList.add('d-none')
-    
-    removeBorderInSidebar()
-    closeContentWindows()
+    document.getElementById('show-backlog-details-container').classList.add('d-none');
+    document.getElementById('summary').classList.add('d-none');
+    closeContentWindows();
 }
 
 
 function closeContentWindows() {
-    document.getElementById('impressum').className = 'd-none'
-    document.getElementById('datenschutz').className = 'd-none'
-    document.getElementById('board').className = 'd-none'
-    document.getElementById('add-task').className = 'd-none'
-    document.getElementById('backlog').className = 'd-none'
-    document.getElementById('help').className = 'd-none'
-    document.getElementById('settings').className = 'd-none'
-
-}
-
-
-function removeBorderInSidebar() {
-    document.getElementById('board-h3').className = ''
-    document.getElementById('backlog-h3').className = ''
-    document.getElementById('add-task-h3').className = ''
-    document.getElementById('help-h3').className = ''
-    document.getElementById('impressum-h3').className = ''
-    document.getElementById('datenschutz-h3').className = ''
-    document.getElementById('help-h3').className = ''
-    document.getElementById('settings-h3').className = ''
-
+    document.getElementById('impressum').classList.add('d-none');
+    document.getElementById('board').classList.add('d-none');
+    document.getElementById('add-task').classList.add('d-none');
+    document.getElementById('backlog').classList.add('d-none');
+    document.getElementById('help').classList.add('d-none');
+    document.getElementById('contacts').classList.add('d-none');
+    closeUrgentDetails()
 }
 
 
@@ -106,13 +95,28 @@ function allowDrop(ev) {
  */
 function setTheme(theme) {
     document.body.dataset.theme = theme
+    changeAddTaskItemsOnBoard(theme);
+}
+
+
+function changeAddTaskItemsOnBoard(theme) {
+    let imagesAddTaskBoard = document.getElementsByClassName('card-header-add-icon-img');
+    for (let i = 0; i < imagesAddTaskBoard.length; i++) {
+        const img = imagesAddTaskBoard[i];
+        if (theme == 'dark') {
+            img.src = './img/add-task-icon-white.png';
+        }
+        else {
+            img.src = './img/add-task-icon.png';
+        }
+    }
 }
 
 
 function openMobileSide() {
     document.getElementById('side-bar').classList.toggle('active-mobile-side');
     document.getElementById('burger').classList.toggle('toggle');
-    document.getElementById('myModal').classList.toggle('d-block')
+    // document.getElementById('myModal').classList.toggle('d-block');
 }
 
 
@@ -122,11 +126,19 @@ window.onclick = function (event) {
         document.getElementById('side-bar').classList.remove("active-mobile-side")
         document.getElementById('burger').classList.remove('toggle')
         document.getElementById('myModal').classList.remove('d-block')
+        changeZPositionOfBackgroundContainerlow()
 
-        document.getElementById('show-backlog-details-container').classList.add('d-none')
-        document.getElementById('show-board-details-container').classList.add('d-none')
         document.getElementById('select-employees-container').classList.add('d-none')
         document.getElementById('show-user-details-container').classList.add('d-none')
+
+        if (!document.getElementById('show-board-details-container').classList.contains('d-none')) {
+            document.getElementById('show-board-details-container').classList.add('d-none')
+            setChangeModeOfBoardTaskDetailsContainerBack('');
+        }
+        if (!document.getElementById('show-backlog-details-container').classList.contains('d-none')) {
+            document.getElementById('show-backlog-details-container').classList.add('d-none')
+            setChangeModeOfBacklogTaskDetailsContainerBack('');
+        }
     }
 }
 
@@ -138,3 +150,20 @@ window.addEventListener('resize', _e => {
         document.getElementById('myModal').classList.remove('d-block')
     }
 })
+
+function changeIconColorHover() {
+    document.getElementById('header-desktop-help').src = 'img/logos/help-btn-hover.svg'
+}
+
+function changeIconColorNoHover() {
+    document.getElementById('header-desktop-help').src = 'img/logos/help-btn.svg'
+}
+
+function changeIconColorHoverLogout() {
+    document.getElementById('logout-btn').src = 'img/logos/logout-join-hover.png'
+}
+
+function changeIconColorNoHoverLogout() {
+    document.getElementById('logout-btn').src = 'img/logos/logout-join.png'
+}
+
