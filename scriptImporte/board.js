@@ -296,7 +296,6 @@ function setChangeModeOfBoardTaskDetailsContainerBack(id) {
 }
 
 
-
 function saveChangesTask(id) {
     let currentTask = tasks.find(t => t.id == id);
     currentTask.category = document.getElementById('category-state-input-change-detail-box').value
@@ -311,7 +310,7 @@ function saveChangesTask(id) {
     renderBoard();
     setChangeModeOfBoardTaskDetailsContainerBack(id);
     closeBoardDetails();
-    if (!document.getElementById('summary').classList.contains('d-none')) {
+    if (taskIsChangeInSummary()) {
         getUrgentTasks();
     }
 }

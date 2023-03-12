@@ -64,21 +64,21 @@ function changeTaskBacklog(id) {
     //description
     setValuesForChangeTaskBacklogDescription(currentTask);
     //buttons
-    document.getElementById('btn-holder-backlog').innerHTML = changeButtonsforEditorModusOnBacklogChangeTask(id);
-    document.getElementById('show-backlog-details-color-status-box').classList.add('d-none')
+    document.getElementById('btn-holder-backlog').innerHTML = changeButtonsforEditorModusOnBacklogChangeTaskHTML(id);
+    document.getElementById('show-backlog-details-color-status-box').classList.add('d-none');
 }
 
 
-function changeButtonsforEditorModusOnBacklogChangeTask(id) {
+function changeButtonsforEditorModusOnBacklogChangeTaskHTML(id) {
     return `<button class="login-area-btn login-area-btn-guest login-btn-shadow change-task-detail-view-btn-small" onclick="setChangeModeOfBacklogTaskDetailsContainerBack('${id}')"><span class="btn-text">Cancel </span><img src="img/close-icon.png" style="height: 16px; object-fit: cover; padding-bottom: 2px;"></button><button class="login-area-btn login-area-btn-login login-btn-shadow change-task-detail-view-btn-small" onclick="saveChangesTaskBacklog('${id}', '')"><span class="btn-text">Save </span><img src="img/logos/icon-save-white.svg" style="height: 24px; object-fit: cover; padding-bottom: 2px;"></button>`
 }
 
 
 function setValuesForChangeTaskBacklogAssignedUser(currentTask) {
-    document.getElementById('show-backlog-details-box-icon').classList.add('d-none')
-    document.getElementById('show-backlog-details-box-icon-change').classList.remove('d-none')
+    document.getElementById('show-backlog-details-box-icon').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-icon-change').classList.remove('d-none');
     document.getElementById('responsible-editor-list-change-task-backlog').innerHTML = '';
-    loadAlreadyAssignedUserInTemporaryArray(currentTask)
+    loadAlreadyAssignedUserInTemporaryArray(currentTask);
     currentTask.user.forEach(user => {
         document.getElementById('responsible-editor-list-change-task-backlog').innerHTML += renderSelectedEmployeesHTML(user.name, user.icon, user.mail)
     });
@@ -93,100 +93,114 @@ function setValuesForChangeTaskBacklogDueDate(currentTask) {
 
 
 function setValuesForChangeTaskBacklogCategory(currentTask) {
-    document.getElementById('show-backlog-details-box-category').classList.add('d-none')
-    document.getElementById('show-backlog-details-box-category-change').classList.remove('d-none')
+    document.getElementById('show-backlog-details-box-category').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-category-change').classList.remove('d-none');
     if (currentTask.category == 'IT') {
-        document.getElementById('category-state-input-backlog-details-box-option-it').selected = 'selected'
+        document.getElementById('category-state-input-backlog-details-box-option-it').selected = 'selected';
     }
     if (currentTask.category == 'Marketing') {
-        document.getElementById('category-state-input-backlog-details-box-option-marketing').selected = 'selected'
+        document.getElementById('category-state-input-backlog-details-box-option-marketing').selected = 'selected';
     }
     if (currentTask.category == 'Sales') {
-        document.getElementById('category-state-input-backlog-details-box-option-sales').selected = 'selected'
+        document.getElementById('category-state-input-backlog-details-box-option-sales').selected = 'selected';
     }
     if (currentTask.category == 'Management') {
-        document.getElementById('category-state-input-backlog-details-box-option-management').selected = 'selected'
+        document.getElementById('category-state-input-backlog-details-box-option-management').selected = 'selected';
     }
 }
 
 
 function setValuesForChangeTaskBacklogTitle(currentTask) {
-    document.getElementById('show-backlog-details-box-title').classList.add('d-none')
-    document.getElementById('title-task-change-detail-box-backlog').classList.remove('d-none')
-    document.getElementById('title-task-change-detail-input-backlog').value = currentTask.title
+    document.getElementById('show-backlog-details-box-title').classList.add('d-none');
+    document.getElementById('title-task-change-detail-box-backlog').classList.remove('d-none');
+    document.getElementById('title-task-change-detail-input-backlog').value = currentTask.title;
 }
 
 
 function setValuesForChangeTaskBacklogPriority(currentTask) {
-    document.getElementById('show-backlog-details-box-priority').classList.add('d-none')
-    document.getElementById('show-backlog-details-box-priority-change').classList.remove('d-none')
+    document.getElementById('show-backlog-details-box-priority').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-priority-change').classList.remove('d-none');
     if (currentTask.priority == 'medium') {
-        document.getElementById('priority-state-input-backlog-details-box-option-normal').selected = 'selected'
+        document.getElementById('priority-state-input-backlog-details-box-option-normal').selected = 'selected';
     }
     if (currentTask.priority == 'low') {
-        document.getElementById('priority-state-input-backlog-details-box-option-low').selected = 'selected'
+        document.getElementById('priority-state-input-backlog-details-box-option-low').selected = 'selected';
     }
     if (currentTask.priority == 'high') {
-        document.getElementById('priority-state-input-backlog-details-box-option-high').selected = 'selected'
+        document.getElementById('priority-state-input-backlog-details-box-option-high').selected = 'selected';
     }
 }
 
 
 function setValuesForChangeTaskBacklogDescription(currentTask) {
-    document.getElementById('show-backlog-details-box-details').classList.add('d-none')
-    document.getElementById('task-description-backlog-details-box').classList.remove('d-none')
-    document.getElementById('task-description-backlog-details-input').value = currentTask.description
+    document.getElementById('show-backlog-details-box-details').classList.add('d-none');
+    document.getElementById('task-description-backlog-details-box').classList.remove('d-none');
+    document.getElementById('task-description-backlog-details-input').value = currentTask.description;
 }
 
 
+/**
+ * 
+ * @param {string} id  - every task obj has an id for identify
+ */
 function setChangeModeOfBacklogTaskDetailsContainerBack(id) {
     setTemporaryArrayResponsibleEmployeesToStandard();
-    //assigned user
-    document.getElementById('show-backlog-details-box-icon').classList.remove('d-none');
-    document.getElementById('show-backlog-details-box-icon-change').classList.add('d-none');
-    //title
-    document.getElementById('show-backlog-details-box-title').classList.remove('d-none');
-    document.getElementById('title-task-change-detail-box-backlog').classList.add('d-none');
-    //category
-    document.getElementById('show-backlog-details-box-category').classList.remove('d-none');
-    document.getElementById('show-backlog-details-box-category-change').classList.add('d-none');
-    //due date
-    document.getElementById('show-backlog-details-box-due-date').classList.remove('d-none');
-    document.getElementById('due-date-backlog-details-box').classList.add('d-none');
-    //priority
-    document.getElementById('show-backlog-details-box-priority').classList.remove('d-none');
-    document.getElementById('show-backlog-details-box-priority-change').classList.add('d-none');
-    //description
-    document.getElementById('show-backlog-details-box-details').classList.remove('d-none');
-    document.getElementById('task-description-backlog-details-box').classList.add('d-none');
-    //buttons
+    hideChangeInputfieldsBacklog();
     if (id != '') {
-        document.getElementById('btn-holder-backlog').innerHTML = renderButtonsBacklog(id);
+        document.getElementById('btn-holder-backlog').innerHTML = renderButtonsBacklog(id);    //buttons
     }
-    document.getElementById('show-backlog-details-color-status-box').classList.remove('d-none')
-
-    //Clear responsible user List
-    document.getElementById('responsible-editor-list-change-task-backlog').innerHTML = '';
+    document.getElementById('show-backlog-details-color-status-box').classList.remove('d-none');
+    document.getElementById('responsible-editor-list-change-task-backlog').innerHTML = ''; //Clear responsible user List
 }
 
 
+function hideChangeInputfieldsBacklog() {
+    document.getElementById('show-backlog-details-box-icon').classList.remove('d-none');    //assigned user
+    document.getElementById('show-backlog-details-box-icon-change').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-title').classList.remove('d-none');    //title
+    document.getElementById('title-task-change-detail-box-backlog').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-category').classList.remove('d-none');    //category
+    document.getElementById('show-backlog-details-box-category-change').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-due-date').classList.remove('d-none');    //due date
+    document.getElementById('due-date-backlog-details-box').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-priority').classList.remove('d-none');    //priority
+    document.getElementById('show-backlog-details-box-priority-change').classList.add('d-none');
+    document.getElementById('show-backlog-details-box-details').classList.remove('d-none');    //description
+    document.getElementById('task-description-backlog-details-box').classList.add('d-none');
+}
+
+
+/**
+ * 
+ * @param {string} id - every task obj has an id
+ */
 function saveChangesTaskBacklog(id) {
     let currentTask = tasks.find(t => t.id == id);
-    currentTask.category = document.getElementById('category-state-input-change-detail-box-backlog').value
-    currentTask.title = document.getElementById('title-task-change-detail-input-backlog').value
-    currentTask.dueDate = new Date(document.getElementById('due-date-backlog-details-box').value).getTime()
-    currentTask.priority = document.getElementById('show-backlog-details-box-priority-change').value
-    currentTask.description = document.getElementById('task-description-backlog-details-input').value
+    currentTask.category = document.getElementById('category-state-input-change-detail-box-backlog').value;
+    currentTask.title = document.getElementById('title-task-change-detail-input-backlog').value;
+    currentTask.dueDate = new Date(document.getElementById('due-date-backlog-details-box').value).getTime();
+    currentTask.priority = document.getElementById('show-backlog-details-box-priority-change').value;
+    currentTask.description = document.getElementById('task-description-backlog-details-input').value;
     currentTask.user.length = 0; //make it empty because all users will load again in the task on next step
-    pushAllUsersInTask(currentTask)
-    setTemporaryArrayResponsibleEmployeesToStandard()
+    pushAllUsersInTask(currentTask);
+    setTemporaryArrayResponsibleEmployeesToStandard();
     uploadTasks();
+    renderAfterChangeTaskInBacklogDetailView(id);
+}
+
+
+function renderAfterChangeTaskInBacklogDetailView(id) {
     renderBacklog();
     setChangeModeOfBacklogTaskDetailsContainerBack(id);
     closeBacklogDetails();
-    if (!document.getElementById('summary').classList.contains('d-none')) {
+    if (taskIsChangeInSummary()) {
         getUrgentTasks();
     }
+}
+
+
+function taskIsChangeInSummary() {
+    return !document.getElementById('summary').classList.contains('d-none');
 }
 
 
@@ -204,12 +218,12 @@ function pushTask(id, statusTask) {
     let currentTask = tasks.find(t => t.id == id);
 
     currentTask.locationTask = "board";
-    setColorAndStatus(currentTask, statusTask)
-    uploadTasks()
-    closeBacklogDetails()
-    renderBoard()
-    renderBacklog()
-    openBoard()
+    setColorAndStatus(currentTask, statusTask);
+    uploadTasks();
+    closeBacklogDetails();
+    renderBoard();
+    renderBacklog();
+    openBoard();
 }
 
 
