@@ -3,59 +3,79 @@ let temporaryArrayResponsibleEmployees = [];
 let statusTask = 'toDo'; //toDo, inProgress, testing, done
 let locationTask = 'board'; // backlog or board
 
+let searchMatches;
+let searchMatchesMails = [];
+let mails = [];
 
+const search = document.getElementById('search-name');
+const matchList = document.getElementById('add-task-editor-list');
+
+let currentDraggedUserAddTask;
+let currentDraggedIconAddTask;
+
+/**
+ * 
+ * @param {string} status - can be to-do, in-progress, testing, done
+ * @param {string} location - backlog or board; necessary for where the task is created
+ */
 function changeStatusTaskAndLocation(status, location) {
     statusTask = status;
-    locationTask = location
-    setTemporaryArrayResponsibleEmployeesToStandard() //if someone choose a user in add task card it will also appear in board card after one user added as responsible for task
+    locationTask = location;
+    setTemporaryArrayResponsibleEmployeesToStandard(); //if someone choose a user in add task card it will also appear in board card after one user added as responsible for task
     setTextInHeaderOfSideBarTask(status);
 }
 
 
+/**
+ * 
+ * @param {string} status - For which section the task in the sidebar task creation at board area will be created stands under the headline
+ */
 function setTextInHeaderOfSideBarTask(status) {
-    let content = document.getElementById('side-bar-task-status')
+    let content = document.getElementById('side-bar-task-status');
     if (status == 'to-do') {
-        content.innerHTML = 'TO DO'
+        content.innerHTML = 'TO DO';
     }
     if (status == 'in-progress') {
-        content.innerHTML = 'IN PROGRESS'
+        content.innerHTML = 'IN PROGRESS';
     }
     if (status == 'testing') {
-        content.innerHTML = 'TESTING'
+        content.innerHTML = 'TESTING';
     }
     if (status == 'done') {
-        content.innerHTML = 'DONE'
+        content.innerHTML = 'DONE';
     }
 }
 
-// ###### Color Options Start ######
+//Color options start
+
 function showColor() {
-    let content = document.getElementById('color-picker')
+    let content = document.getElementById('color-picker');
     content.innerHTML = '';
     colorPicker.forEach(color => {
-        content.innerHTML += colorPickerHTML(color)
+        content.innerHTML += colorPickerHTML(color);
     });
 
     if (colorOptionsAreHiding(content)) {
-        content.classList.remove('d-none')
+        content.classList.remove('d-none');
     }
     else {
-        content.classList.add('d-none')
+        content.classList.add('d-none');
     }
 }
+
 
 function showColorChangeBoard() {
-    let content = document.getElementById('color-picker-change-board')
+    let content = document.getElementById('color-picker-change-board');
     content.innerHTML = '';
     colorPicker.forEach(color => {
-        content.innerHTML += colorPickerHTML(color)
+        content.innerHTML += colorPickerHTML(color);
     });
 
     if (colorOptionsAreHiding(content)) {
-        content.classList.remove('d-none')
+        content.classList.remove('d-none');
     }
     else {
-        content.classList.add('d-none')
+        content.classList.add('d-none');
     }
 }
 
@@ -80,6 +100,7 @@ function takeColor(color) {
 
 // ###### Color Options End ######
 
+
 function createTask() {
     if (taskIsWritteninAddTaskArea()) {
         createTaskFromAddTask()
@@ -100,10 +121,10 @@ function createTaskFromBoard() {
     let priority = document.getElementById('priority-state-input-sidebar');
     let category = document.getElementById('category-list-input-sidebar');
     let description = document.getElementById('task-description-sidebar');
-    let color = temporaryArrayColor[0]
-    let id = tasks.length
-    let dueDate = document.getElementById('due-date-sidebar')
-    createObjTask(title, priority, category, description, color, id, dueDate)
+    let color = temporaryArrayColor[0];
+    let id = tasks.length;
+    let dueDate = document.getElementById('due-date-sidebar');
+    createObjTask(title, priority, category, description, color, id, dueDate);
 }
 
 
@@ -112,33 +133,32 @@ function createTaskFromAddTask() {
     let priority = document.getElementById('priority-state-input');
     let category = document.getElementById('category-list-input');
     let description = document.getElementById('task-description');
-    let color = temporaryArrayColor[0]
+    let color = temporaryArrayColor[0];
     let id = createRandomId();
-    let dueDate = document.getElementById('due-date')
-    createObjTask(title, priority, category, description, color, id, dueDate)
+    let dueDate = document.getElementById('due-date');
+    createObjTask(title, priority, category, description, color, id, dueDate);
 }
 
 
 function createRandomId() {
     let textId = Math.round(new Date().getTime() / 1000);
     let idAdd = Math.random().toString(16).substr(2, 6);
-    let id = textId + idAdd
-    return id
+    let id = textId + idAdd;
+    return id;
 }
 
 
 function createObjTask(title, priority, category, description, color, id, dueDate) {
     let taskInfo = createJsonForTask(title, priority, category, description, color, id, dueDate);
     let task = new Task(taskInfo);
-
     pushAllUsersInTask(task);
     tasks.push(task);
     uploadTasks();
     clearAddTask();
     renderBoard();
     if (locationTask == 'backlog') {
-        renderBacklog()
-        openBacklog()
+        renderBacklog();
+        openBacklog();
     }
     else {
         pushTask(id, statusTask);
@@ -166,7 +186,7 @@ function createJsonForTask(title, priority, category, description, color, id, du
 function pushAllUsersInTask(task) {
     for (let i = 0; i < temporaryArrayResponsibleEmployees.length; i++) {
         const nameResponsibleUserObj = temporaryArrayResponsibleEmployees[i];
-        task.user.push(nameResponsibleUserObj)
+        task.user.push(nameResponsibleUserObj);
     }
 }
 
@@ -181,7 +201,7 @@ function clearAddTask() {
     clearResponsibleEditorList();
     setTemporaryArrayColorToStandard();
     setTemporaryArrayResponsibleEmployeesToStandard();
-    clearColorofButtonForColorSelection()
+    clearColorofButtonForColorSelection();
 }
 
 
@@ -215,76 +235,81 @@ function clearColorofButtonForColorSelection() {
 
 
 function closeListOfEmployeesBoxForAddTask() {
-    document.getElementById('select-employees-container').classList.add('d-none')
+    document.getElementById('select-employees-container').classList.add('d-none');
     if (currentlyNotInChangeModeOffTaskDetailViewInBoardArea() && currentlyNotInChangeModeOffTaskDetailViewInBacklogArea()) {
-        document.getElementById('myModal').classList.remove('d-block')
+        document.getElementById('myModal').classList.remove('d-block');
     }
-    changeZPositionOfBackgroundContainerlow()
-    clearUserListForAddEmployees()
+    changeZPositionOfBackgroundContainerLow();
+    clearUserListForAddEmployees();
 }
 
 
 function currentlyNotInChangeModeOffTaskDetailViewInBoardArea() {
-    return document.getElementById('show-board-details-container').classList.contains('d-none')
+    return document.getElementById('show-board-details-container').classList.contains('d-none');
 }
 
 
 function currentlyNotInChangeModeOffTaskDetailViewInBacklogArea() {
-    return document.getElementById('show-backlog-details-container').classList.contains('d-none')
+    return document.getElementById('show-backlog-details-container').classList.contains('d-none');
 }
 
 
 function openListOfEmployeesBoxForAddTask() {
     showTwentyUsersAsProbosalsInSearchfield();
-    changeZPositionOfBackgroundContainerHigh();
+    changeZPositionOfBackgroundContainerHigh(); //the background container will be change the z-index position
 
-    document.getElementById('myModal').classList.add('d-block')
+    document.getElementById('myModal').classList.add('d-block');
     document.getElementById('select-employees-container').classList.remove('d-none');
 }
 
 
 function changeZPositionOfBackgroundContainerHigh() {
-    document.getElementById('myModal').style = 'z-index: 99;'
+    document.getElementById('myModal').style = 'z-index: 99;';
 }
 
 
-function changeZPositionOfBackgroundContainerlow() {
-    document.getElementById('myModal').style = 'z-index: 49;'
+function changeZPositionOfBackgroundContainerLow() {
+    document.getElementById('myModal').style = 'z-index: 49;';
 }
 
 
 function clearUserListForAddEmployees() {
-    let contentName = document.getElementById('search-name')
-    contentName.value = ''
+    let contentName = document.getElementById('search-name');
+    contentName.value = '';
 
-    let contentMail = document.getElementById('search-mail')
-    contentMail.value = ''
+    let contentMail = document.getElementById('search-mail');
+    contentMail.value = '';
 }
+
 
 //Search Function
 
-const search = document.getElementById('search-name')
-const matchList = document.getElementById('add-task-editor-list')
 
+
+/**
+ * 
+ * @param {string} visible
+ * @param {string} hide
+ */
 function showSearchInputfield(visible, hide) {
-    let contentToShow = document.getElementById(`show-search-${visible}-inputfield`)
+    let contentToShow = document.getElementById(`show-search-${visible}-inputfield`);
     contentToShow.classList.remove('d-none') //if show search Mail is clicked, show clickable text search Name appear
 
-    let contentToHide = document.getElementById(`show-search-${hide}-inputfield`)
+    let contentToHide = document.getElementById(`show-search-${hide}-inputfield`);
     contentToHide.classList.add('d-none') // and clickable text search mail disappear
 
-    let inputfieldToHide = document.getElementById(`search-${visible}`)
-    let inputfieldToShow = document.getElementById(`search-${hide}`)
+    let inputfieldToHide = document.getElementById(`search-${visible}`);
+    let inputfieldToShow = document.getElementById(`search-${hide}`);
 
-    inputfieldToHide.classList.add('d-none')
-    inputfieldToShow.classList.remove('d-none')
-    clearHidedInputfield(visible)
+    inputfieldToHide.classList.add('d-none');
+    inputfieldToShow.classList.remove('d-none');
+    clearHidedInputfield(visible);
 }
 
 
 function clearHidedInputfield(show) {
-    let inputfieldShow = document.getElementById(`search-${show}`)
-    inputfieldShow.value = ''
+    let inputfieldShow = document.getElementById(`search-${show}`);
+    inputfieldShow.value = '';
 }
 
 
@@ -299,45 +324,36 @@ function startSearchMail() {
     searchUserMail(searchText);
 }
 
-let searchMatches;
-let searchMatchesMails = [];
-let mails = [];
-
 
 function searchUserMail(searchText) {
-
-    fillTheArrayOfAllUserMailAdresses()
+    fillTheArrayOfAllUserMailAdresses();
     searchMatchesMails = mails.filter(editor => {
-        const regex = new RegExp(`^${searchText}`, "gi")
-        return editor.match(regex)
+        const regex = new RegExp(`^${searchText}`, "gi");
+        return editor.match(regex);
     })
-
     if (document.getElementById('search-mail').value == '') {
         searchMatchesMails = '';
         document.getElementById('add-task-editor-list').innerHTML = '';
     }
-
-    showSearchMatchesMail()
+    showSearchMatchesMail();
 }
 
 
 function fillTheArrayOfAllUserMailAdresses() {
-    let allUsersMails = users.filter(t => t.mail != '')
+    let allUsersMails = users.filter(t => t.mail != '');
     mails = allUsersMails.map(function (element) {
-        return `${element.mail}`
+        return `${element.mail}`;
     })
 }
 
 
-
-
 function showSearchMatchesMail() {
     if (searchMatchesMails.length > 0) {
-        let userProposals = document.getElementById('add-task-editor-list')
+        let userProposals = document.getElementById('add-task-editor-list');
         document.getElementById('add-task-editor-list').innerHTML = ''; //clear visible list of users
 
         searchMatchesMails.forEach(mailAddress => {
-            getAllUserOfTheSearchByMail(mailAddress, userProposals)
+            getAllUserOfTheSearchByMail(mailAddress, userProposals);
         })
 
         searchMatches = [];
@@ -346,9 +362,9 @@ function showSearchMatchesMail() {
 
 
 function getAllUserOfTheSearchByMail(mailAddress, userProposals) {
-    let userObj = users.find(u => u.mail == mailAddress)
-    let icon = userObj.icon
-    let user = userObj.name
+    let userObj = users.find(u => u.mail == mailAddress);
+    let icon = userObj.icon;
+    let user = userObj.name;
     if (!alreadyResponsibleUserAdded(user) || !alreadyResponsibleUserAddedChangeTaskBoard(user)) { //if user is already in the editor list, it has not to be shown as possible editor
         userProposals.innerHTML += renderSearchedEmployeesHTML(user, icon);
     }
@@ -356,10 +372,10 @@ function getAllUserOfTheSearchByMail(mailAddress, userProposals) {
 
 
 function searchUserName(searchText) {
-    const editors = userNames
+    const editors = userNames;
     searchMatches = editors.filter(editor => {
-        const regex = new RegExp(`^${searchText}`, "gi")
-        return editor.match(regex)
+        const regex = new RegExp(`^${searchText}`, "gi");
+        return editor.match(regex);
     })
 
     if (document.getElementById('search-name').value == '') {
@@ -367,20 +383,20 @@ function searchUserName(searchText) {
         document.getElementById('add-task-editor-list').innerHTML = '';
     }
 
-    showSearchMatches()
+    showSearchMatches();
 }
 
 
 function showTwentyUsersAsProbosalsInSearchfield() {
-    let userProposals = document.getElementById('add-task-editor-list')
+    let userProposals = document.getElementById('add-task-editor-list');
 
-    userProposals.innerHTML = ``
+    userProposals.innerHTML = ``;
     if (noUserHasBeenSearched()) {
         if (notMoreUserObjectsThanTwenty()) {
-            renderUsersAsProposals(userProposals)
+            renderUsersAsProposals(userProposals);
         }
         else {
-            renderFirstTwentyUsersAsProposals(userProposals)
+            renderFirstTwentyUsersAsProposals(userProposals);
         }
     }
 }
@@ -403,7 +419,7 @@ function renderUsersAsProposals(userProposals) {
 function renderFirstTwentyUsersAsProposals(userProposals) {
     for (let i = 0; i < 20; i++) {
         let user = users[i].name;
-        let icon = users[i].icon
+        let icon = users[i].icon;
 
         if (alreadyResponsibleUserAdded(user) || alreadyResponsibleUserAddedChangeTaskBoard(user) || alreadyResponsibleUserAddedChangeTaskBacklog(user)) { //if user is already in the editor list, it has not to be shown as possible editor
         }
@@ -426,13 +442,12 @@ function notMoreUserObjectsThanTwenty() {
 
 function showSearchMatches() {
     if (searchMatches.length > 0) {
-        let userProposals = document.getElementById('add-task-editor-list')
+        let userProposals = document.getElementById('add-task-editor-list');
         document.getElementById('add-task-editor-list').innerHTML = '';
         for (let i = 0; i < searchMatches.length; i++) {
             let user = searchMatches[i];
-            let userObj = users.find(t => t.name == user)
-            let icon = userObj.icon
-
+            let userObj = users.find(t => t.name == user);
+            let icon = userObj.icon;
             if (!alreadyResponsibleUserAdded(user) || !alreadyResponsibleUserAddedChangeTaskBoard(user) || !alreadyResponsibleUserAddedChangeTaskBacklog(user)) { //if user is already in the editor list, it has not to be shown as possible editor
                 userProposals.innerHTML += renderSearchedEmployeesHTML(user, icon);
             }
@@ -443,43 +458,30 @@ function showSearchMatches() {
 
 
 function alreadyResponsibleUserAdded(user) {
-    return document.getElementById('responsible-editor-list').contains(document.getElementById(`${user}-responsible-editor-img`))
+    return document.getElementById('responsible-editor-list').contains(document.getElementById(`${user}-responsible-editor-img`));
 }
 
 
 function alreadyResponsibleUserAddedChangeTaskBoard(user) {
-    return document.getElementById('responsible-editor-list-change-task-board').contains(document.getElementById(`${user}-responsible-editor-img`))
+    return document.getElementById('responsible-editor-list-change-task-board').contains(document.getElementById(`${user}-responsible-editor-img`));
 }
 
 
 function alreadyResponsibleUserAddedChangeTaskBacklog(user) {
-    return document.getElementById('responsible-editor-list-change-task-backlog').contains(document.getElementById(`${user}-responsible-editor-img`))
+    return document.getElementById('responsible-editor-list-change-task-backlog').contains(document.getElementById(`${user}-responsible-editor-img`));
 }
 
 
 function addUserToResponsibleEmployees(user, icon) {
-    let userObj = users.find(t => t.name == user)
-    temporaryArrayResponsibleEmployees.push(userObj)
-    renderResponsibleUserList()
+    let userObj = users.find(t => t.name == user);
+    temporaryArrayResponsibleEmployees.push(userObj);
+    renderResponsibleUserList();
     deleteFromSearchListByClickOnIcon(user, icon);
 }
 
 
 function renderResponsibleUserList() {
-    let content;
-    if (changeInDetailViewOnBoardIsHidden() && !boardIsClosed()) {
-        content = document.getElementById('responsible-editor-list-board')
-    }
-    if (!changeInDetailViewOnBoardIsHidden()) {
-        content = document.getElementById('responsible-editor-list-change-task-board')
-    }
-    if (changeInDetailViewOnBacklogIsHidden() && !backlogIsClosed()) {
-        content = document.getElementById('responsible-editor-list')
-    }
-    if (!changeInDetailViewOnBacklogIsHidden()) {
-        content = document.getElementById('responsible-editor-list-change-task-backlog')
-    }
-
+    let content = findRightPlaceForRenderEmployees();
     content.innerHTML = '';
 
     for (let i = 0; i < temporaryArrayResponsibleEmployees.length; i++) {
@@ -491,39 +493,55 @@ function renderResponsibleUserList() {
 }
 
 
+function findRightPlaceForRenderEmployees() {
+    if (changeInDetailViewOnBoardIsHidden() && !boardIsClosed()) {
+        return document.getElementById('responsible-editor-list-board');
+    }
+    if (!changeInDetailViewOnBoardIsHidden()) {
+        return document.getElementById('responsible-editor-list-change-task-board');
+    }
+    if (changeInDetailViewOnBacklogIsHidden() && !backlogIsClosed()) {
+        return document.getElementById('responsible-editor-list');
+    }
+    if (!changeInDetailViewOnBacklogIsHidden()) {
+        return document.getElementById('responsible-editor-list-change-task-backlog');
+    }
+}
+
+
 function changeInDetailViewOnBoardIsHidden() {
-    return document.getElementById('show-board-details-box-icon-change-detail-box').classList.contains('d-none')
+    return document.getElementById('show-board-details-box-icon-change-detail-box').classList.contains('d-none');
 }
 
 
 function boardIsClosed() {
-    return document.getElementById('board').classList.contains('d-none')
+    return document.getElementById('board').classList.contains('d-none');
 }
 
 
 function backlogIsClosed() {
-    return document.getElementById('backlog').classList.contains('d-none')
+    return document.getElementById('backlog').classList.contains('d-none');
 }
 
 
 function changeInDetailViewOnBacklogIsHidden() {
-    return document.getElementById('show-backlog-details-box-icon-change').classList.contains('d-none')
+    return document.getElementById('show-backlog-details-box-icon-change').classList.contains('d-none');
 }
 
 
 function deleteFromSearchListByClickOnIcon(user, icon) {
-    let content = document.getElementById(`${user}-${icon}`)
-    content.parentNode.removeChild(content)
+    let content = document.getElementById(`${user}-${icon}`);
+    content.parentNode.removeChild(content);
 }
 
 
-let currentDraggedUserAddTask;
-let currentDraggedIconAddTask;
-
-
+/**
+ * @param {string} mail
+ * @param {string} icon 
+ */
 function getResponsibleEmployeeForDelete(mail, icon) {
     currentDraggedUserAddTask = mail;
-    currentDraggedIconAddTask = icon
+    currentDraggedIconAddTask = icon;
 }
 
 
@@ -532,27 +550,30 @@ function moveToBin() {
     const index = temporaryArrayResponsibleEmployees.findIndex(x => x.mail === currentDraggedUserAddTask);
     if (index !== undefined) temporaryArrayResponsibleEmployees.splice(index, 1);
 
-    renderResponsibleUserList()
+    renderResponsibleUserList();
 }
 
 
 function showHintForBinAddTask() {
-    document.getElementById('bin-hint-task-one').classList.remove('d-none')
-    document.getElementById('bin-hint-task-two').classList.remove('d-none')
-    document.getElementById('bin-hint-task-three').classList.remove('d-none')
+    document.getElementById('bin-hint-task-one').classList.remove('d-none');
+    document.getElementById('bin-hint-task-two').classList.remove('d-none');
+    document.getElementById('bin-hint-task-three').classList.remove('d-none');
 }
 
 
 function hideHintForBinAddTask() {
-    document.getElementById('bin-hint-task-one').classList.add('d-none')
-    document.getElementById('bin-hint-task-two').classList.add('d-none')
-    document.getElementById('bin-hint-task-three').classList.add('d-none')
+    document.getElementById('bin-hint-task-one').classList.add('d-none');
+    document.getElementById('bin-hint-task-two').classList.add('d-none');
+    document.getElementById('bin-hint-task-three').classList.add('d-none');
 }
 
-
+/**
+ * 
+ * @param {Task} currentTask 
+ */
 function loadAlreadyAssignedUserInTemporaryArray(currentTask) {
     for (let i = 0; i < currentTask.user.length; i++) {
         const user = currentTask.user[i];
-        temporaryArrayResponsibleEmployees.push(user)
+        temporaryArrayResponsibleEmployees.push(user);
     }
 }

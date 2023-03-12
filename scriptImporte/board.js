@@ -311,7 +311,9 @@ function saveChangesTask(id) {
     renderBoard();
     setChangeModeOfBoardTaskDetailsContainerBack(id);
     closeBoardDetails();
-    getUrgentTasks();
+    if (!document.getElementById('summary').classList.contains('d-none')) {
+        getUrgentTasks();
+    }
 }
 
 

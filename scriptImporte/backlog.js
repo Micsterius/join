@@ -184,7 +184,9 @@ function saveChangesTaskBacklog(id) {
     renderBacklog();
     setChangeModeOfBacklogTaskDetailsContainerBack(id);
     closeBacklogDetails();
-    getUrgentTasks();
+    if (!document.getElementById('summary').classList.contains('d-none')) {
+        getUrgentTasks();
+    }
 }
 
 

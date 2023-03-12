@@ -32,7 +32,7 @@ function renderBacklogHTML(task) {
 function addUserInfoHTML(task) {
     return `
         <div class="backlog-user-info">
-            +${task.user.length}
+            +${task.user.length-1}
         </div>
     `
 }
