@@ -114,7 +114,7 @@ function createTaskFromAddTask() {
     let description = document.getElementById('task-description');
     let color = temporaryArrayColor[0]
     let id = createRandomId();
-    let dueDate = document.getElementById('due-date')    
+    let dueDate = document.getElementById('due-date')
     createObjTask(title, priority, category, description, color, id, dueDate)
 }
 
@@ -467,16 +467,16 @@ function addUserToResponsibleEmployees(user, icon) {
 
 function renderResponsibleUserList() {
     let content;
-    if (locationTask == 'board' && changeInDetailViewOnBoardIsHidden()) {
+    if (changeInDetailViewOnBoardIsHidden() && !boardIsClosed()) {
         content = document.getElementById('responsible-editor-list-board')
     }
-    if (locationTask == 'board' && !changeInDetailViewOnBoardIsHidden()) {
+    if (!changeInDetailViewOnBoardIsHidden()) {
         content = document.getElementById('responsible-editor-list-change-task-board')
     }
-    if (locationTask == 'backlog' && changeInDetailViewOnBacklogIsHidden()) {
+    if (changeInDetailViewOnBacklogIsHidden() && !backlogIsClosed()) {
         content = document.getElementById('responsible-editor-list')
     }
-    if (locationTask == 'backlog' && !changeInDetailViewOnBacklogIsHidden()) {
+    if (!changeInDetailViewOnBacklogIsHidden()) {
         content = document.getElementById('responsible-editor-list-change-task-backlog')
     }
 
@@ -493,6 +493,16 @@ function renderResponsibleUserList() {
 
 function changeInDetailViewOnBoardIsHidden() {
     return document.getElementById('show-board-details-box-icon-change-detail-box').classList.contains('d-none')
+}
+
+
+function boardIsClosed() {
+    return document.getElementById('board').classList.contains('d-none')
+}
+
+
+function backlogIsClosed() {
+    return document.getElementById('backlog').classList.contains('d-none')
 }
 
 

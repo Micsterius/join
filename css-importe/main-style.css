@@ -18,9 +18,14 @@ h3 {
     padding: var(--px-low);
 }
 
-#impressum{
+#impressum {
     margin-left: 12px
 }
+
+.nbr-1 {
+    display: none;
+}
+
 .side-bar {
     z-index: 40;
     position: relative;
@@ -32,12 +37,12 @@ h3 {
     height: 100vh;
 }
 
-.legal-notice-container{
+.legal-notice-container {
     position: absolute;
     bottom: 24px;
 }
 
-.legal-notice-container img{
+.legal-notice-container img {
     margin-right: 8px;
 }
 
@@ -340,7 +345,7 @@ h3 {
     cursor: pointer;
 }
 
-.sidebar-point-container{
+.sidebar-point-container {
     margin-top: 64px;
 }
 
@@ -371,7 +376,7 @@ h3 {
     margin-left: 18px;
 }
 
-.headline-card{
+.headline-card {
     color: var(--clr-secondary);
     margin-top: 24px;
     margin-left: 24px;
@@ -380,7 +385,7 @@ h3 {
     font-weight: 500;
 }
 
-.change-user-details{
+.change-user-details {
     margin-top: 4px;
     width: 150px;
     margin-bottom: 4px;
@@ -389,17 +394,17 @@ h3 {
     border-radius: 8px;
 }
 
-.detail-view-btn-box{
+.detail-view-btn-box {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.color-secondary{
+.color-secondary {
     color: var(--clr-secondary);
 }
 
-.w100{
+.w100 {
     width: 100% !important;
 }
 
@@ -408,12 +413,12 @@ h3 {
         height: 80px;
     }
 
-    .logo img{
+    .logo img {
         height: 100%;
         object-fit: cover;
     }
 
-    .sidebar-point-container{
+    .sidebar-point-container {
         margin-top: 24px;
     }
 }
@@ -424,7 +429,7 @@ h3 {
         margin-bottom: 0;
     }
 
-    .sidebar-point-container{
+    .sidebar-point-container {
         margin-top: 12px;
     }
 }
@@ -434,7 +439,7 @@ h3 {
         display: none;
     }
 
-    .sidebar-point-container{
+    .sidebar-point-container {
         margin-top: 0;
     }
 }
@@ -443,9 +448,10 @@ h3 {
     .nav-holder {
         margin-top: 12px;
     }
-    .sidebar-box-point{
+
+    .sidebar-box-point {
         padding-top: 4px;
-    padding-bottom: 4px;
+        padding-bottom: 4px;
     }
 }
 
@@ -453,20 +459,21 @@ h3 {
     .nav-holder {
         margin-top: 4px;
     }
-    .sidebar-box-point img{
+
+    .sidebar-box-point img {
         width: 20px;
     }
 
-    .sidebar-box-point h3{
+    .sidebar-box-point h3 {
         font-size: 16px;
     }
 
-    .sidebar-box-point{
+    .sidebar-box-point {
         padding-top: 2px;
-    padding-bottom: 2px;
+        padding-bottom: 2px;
     }
 
-    .legal-notice-container{
+    .legal-notice-container {
         bottom: 4px;
     }
 }

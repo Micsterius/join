@@ -135,6 +135,9 @@ function showUrgentTasks(urgentTasks) {
             <td class="details">${task.title}</td>
         </tr>
     `
+    if (task.user.length > 1) {
+        document.getElementById(`assigned-to-${task.id}`).innerHTML += addUserInfoHTML(task)
+    }
     }
 }
 

@@ -17,7 +17,7 @@ function renderBacklogHTML(task) {
 
                     <div class="assigned-to" id="assigned-to-${task.id}">
                         <h3>${task.user[0].name}</h3>
-                        <a href="mailto:${task.user[0].mail}">${task.user[0].mail}</a>
+                        <a href="mailto:task.user">${task.user[0].mail}</a>
                     </div>
                 </div>
             </td>

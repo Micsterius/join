@@ -178,11 +178,19 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    position: relative;
 }
 
 .assigned-to-summary h3 {
     padding: 0;
     margin-bottom: 4px;
+}
+
+.assigned-to-summary div {
+    position: absolute;
+    right: 4px;
+    top: 0;
+    transform: unset !important;
 }
 
 @media screen and (max-width: 1300px) {

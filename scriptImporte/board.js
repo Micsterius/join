@@ -311,6 +311,7 @@ function saveChangesTask(id) {
     renderBoard();
     setChangeModeOfBoardTaskDetailsContainerBack(id);
     closeBoardDetails();
+    getUrgentTasks();
 }
 
 

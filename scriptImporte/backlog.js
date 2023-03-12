@@ -184,6 +184,7 @@ function saveChangesTaskBacklog(id) {
     renderBacklog();
     setChangeModeOfBacklogTaskDetailsContainerBack(id);
     closeBacklogDetails();
+    getUrgentTasks();
 }
 
 
