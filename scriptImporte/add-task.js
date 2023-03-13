@@ -256,20 +256,14 @@ function currentlyNotInChangeModeOffTaskDetailViewInBacklogArea() {
 
 function openListOfEmployeesBoxForAddTask() {
     showTwentyUsersAsProbosalsInSearchfield();
-    changeZPositionOfBackgroundContainerHigh(); //the background container will be change the z-index position
-
     document.getElementById('myModal').classList.add('d-block');
     document.getElementById('select-employees-container').classList.remove('d-none');
+    changeZPositionOfBackgroundContainerHigh(); //the background container will be change the z-index position
 }
 
 
 function changeZPositionOfBackgroundContainerHigh() {
-    document.getElementById('myModal').style = 'z-index: 99;';
-}
-
-
-function changeZPositionOfBackgroundContainerLow() {
-    document.getElementById('myModal').style = 'z-index: 49;';
+    document.getElementById('myModal').classList.add('z-index-99');
 }
 
 

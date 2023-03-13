@@ -43,6 +43,10 @@
     position: relative;
 }
 
+.to-do:hover {
+    cursor: pointer;
+}
+
 .board h3 {
     margin: 0;
     font-weight: bold;

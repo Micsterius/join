@@ -109,6 +109,7 @@ function getUrgentTasks() {
         let urgentTasks = findUrgentTasks(tasks);
         showUrgentTasks(urgentTasks)
     }
+    document.getElementById('myModal').classList.add('d-block')
 }
 
 
@@ -135,9 +136,9 @@ function showUrgentTasks(urgentTasks) {
             <td class="details">${task.title}</td>
         </tr>
     `
-    if (task.user.length > 1) {
-        document.getElementById(`assigned-to-${task.id}`).innerHTML += addUserInfoHTML(task)
-    }
+        if (task.user.length > 1) {
+            document.getElementById(`assigned-to-${task.id}`).innerHTML += addUserInfoHTML(task)
+        }
     }
 }
 

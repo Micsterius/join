@@ -120,24 +120,35 @@ function openMobileSide() {
 }
 
 
-// When user clicks anywhere outside of the sidebar, close sidebar
+function changeZPositionOfBackgroundContainerLow() {
+    document.getElementById('myModal').classList.remove('z-index-99');
+}
+
+
+
 window.onclick = function (event) {
     if (event.target == document.getElementById('myModal')) {
-        document.getElementById('side-bar').classList.remove("active-mobile-side")
-        document.getElementById('burger').classList.remove('toggle')
-        document.getElementById('myModal').classList.remove('d-block')
-        changeZPositionOfBackgroundContainerlow()
+        if (document.getElementById('select-employees-container').classList.contains('d-none')) {
+            changeZPositionOfBackgroundContainerLow();
+            document.getElementById('side-bar').classList.remove("active-mobile-side")
+            document.getElementById('burger').classList.remove('toggle')
+            document.getElementById('myModal').classList.remove('d-block')
 
-        document.getElementById('select-employees-container').classList.add('d-none')
-        document.getElementById('show-user-details-container').classList.add('d-none')
-
-        if (!document.getElementById('show-board-details-container').classList.contains('d-none')) {
-            document.getElementById('show-board-details-container').classList.add('d-none')
-            setChangeModeOfBoardTaskDetailsContainerBack('');
+            document.getElementById('select-employees-container').classList.add('d-none')
+            document.getElementById('show-user-details-container').classList.add('d-none')
+            closeUrgentDetails();
+            if (!document.getElementById('show-board-details-container').classList.contains('d-none')) {
+                document.getElementById('show-board-details-container').classList.add('d-none')
+                setChangeModeOfBoardTaskDetailsContainerBack('');
+            }
+            if (!document.getElementById('show-backlog-details-container').classList.contains('d-none')) {
+                document.getElementById('show-backlog-details-container').classList.add('d-none')
+                setChangeModeOfBacklogTaskDetailsContainerBack('');
+            }
         }
-        if (!document.getElementById('show-backlog-details-container').classList.contains('d-none')) {
-            document.getElementById('show-backlog-details-container').classList.add('d-none')
-            setChangeModeOfBacklogTaskDetailsContainerBack('');
+        else {
+            changeZPositionOfBackgroundContainerLow();
+            document.getElementById('select-employees-container').classList.add('d-none')
         }
     }
 }
