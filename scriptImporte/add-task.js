@@ -500,12 +500,17 @@ function findRightPlaceForRenderEmployees() {
     if (!changeInDetailViewOnBoardIsHidden()) {
         return document.getElementById('responsible-editor-list-change-task-board');
     }
-    if (changeInDetailViewOnBacklogIsHidden() && !backlogIsClosed()) {
+    if (!addTaskSectionIsClosed()) {
         return document.getElementById('responsible-editor-list');
     }
     if (!changeInDetailViewOnBacklogIsHidden()) {
         return document.getElementById('responsible-editor-list-change-task-backlog');
     }
+}
+
+
+function addTaskSectionIsClosed() {
+    return document.getElementById('add-task').classList.contains('d-none')
 }
 
 
