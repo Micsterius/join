@@ -144,21 +144,17 @@ function showUrgentTasks(urgentTasks) {
 
 
 function closeUrgentDetails() {
-    document.getElementById('show-urgent-tasks-summary').classList.add('d-none')
+    document.getElementById('show-urgent-tasks-summary').classList.add('d-none');
+    document.getElementById('myModal').classList.remove('d-block');
 }
 
 
 function openTaskSummary(taskId) {
     let task = tasks.find(t => t.id == taskId)
     if (task.locationTask == 'board') {
-        // openBoard();
-        // closeUrgentDetails();
         openTaskDetails(taskId);
     }
     if (task.locationTask == 'backlog') {
-        // openBacklog(); 
-        // closeBoardAddTask();
-        // closeUrgentDetails();
         openAcceptTask(taskId);
 
     }

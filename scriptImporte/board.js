@@ -317,7 +317,9 @@ function saveChangesTask(id) {
 
 
 function closeBoardDetails() {
-    document.getElementById('myModal').classList.remove('d-block')
+    if (document.getElementById('show-urgent-tasks-summary').classList.contains('d-none')) {
+        document.getElementById('myModal').classList.remove('d-block')
+    }
     document.getElementById('show-board-details-container').classList.add('d-none')
 }
 
