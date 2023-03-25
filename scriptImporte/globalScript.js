@@ -191,16 +191,18 @@ function clickOnMyModalInSummaryArea() {
     }
     //if user selection is closed and detail task board is open
     if (selectEmployeesIsClosed() && !detailBoardTaskIsClosed()) {
-        document.getElementById('show-board-details-container').classList.add('d-none')
+        document.getElementById('show-board-details-container').classList.add('d-none');
+        setChangeModeOfBoardTaskDetailsContainerBack('');
     }
     //if user selection is closed and detail task backlog is open
     if (selectEmployeesIsClosed() && !detailBacklogTaskIsClosed()) {
-        document.getElementById('show-backlog-details-container').classList.add('d-none')
+        document.getElementById('show-backlog-details-container').classList.add('d-none');
+        setChangeModeOfBacklogTaskDetailsContainerBack('');
     }
     //if user selection is open
     if (!selectEmployeesIsClosed()) {
         changeZPositionOfBackgroundContainerLow();
-        document.getElementById('select-employees-container').classList.add('d-none')
+        document.getElementById('select-employees-container').classList.add('d-none');
     }
 }
 
