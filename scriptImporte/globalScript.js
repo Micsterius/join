@@ -128,28 +128,79 @@ function changeZPositionOfBackgroundContainerLow() {
 
 window.onclick = function (event) {
     if (event.target == document.getElementById('myModal')) {
-        if (document.getElementById('select-employees-container').classList.contains('d-none')) {
-            changeZPositionOfBackgroundContainerLow();
-            document.getElementById('side-bar').classList.remove("active-mobile-side")
-            document.getElementById('burger').classList.remove('toggle')
-            document.getElementById('myModal').classList.remove('d-block')
-
-            document.getElementById('select-employees-container').classList.add('d-none')
-            document.getElementById('show-user-details-container').classList.add('d-none')
-            closeUrgentDetails();
-            if (!document.getElementById('show-board-details-container').classList.contains('d-none')) {
-                document.getElementById('show-board-details-container').classList.add('d-none')
-                setChangeModeOfBoardTaskDetailsContainerBack('');
+        if (summaryAreaIsClosed()) {
+            if (selectEmployeesIsClosed()) {
+                closeOpenWindow()
             }
-            if (!document.getElementById('show-backlog-details-container').classList.contains('d-none')) {
-                document.getElementById('show-backlog-details-container').classList.add('d-none')
-                setChangeModeOfBacklogTaskDetailsContainerBack('');
+            else {
+                changeZPositionOfBackgroundContainerLow();
+                document.getElementById('select-employees-container').classList.add('d-none')
             }
         }
         else {
-            changeZPositionOfBackgroundContainerLow();
-            document.getElementById('select-employees-container').classList.add('d-none')
+            clickOnMyModalInSummaryArea();
         }
+    }
+}
+
+
+function closeOpenWindow() {
+    changeZPositionOfBackgroundContainerLow();
+    document.getElementById('side-bar').classList.remove("active-mobile-side")
+    document.getElementById('burger').classList.remove('toggle')
+    document.getElementById('myModal').classList.remove('d-block')
+
+    document.getElementById('select-employees-container').classList.add('d-none')
+    document.getElementById('show-user-details-container').classList.add('d-none')
+    closeUrgentDetails();
+    if (!document.getElementById('show-board-details-container').classList.contains('d-none')) {
+        document.getElementById('show-board-details-container').classList.add('d-none')
+        setChangeModeOfBoardTaskDetailsContainerBack('');
+    }
+    if (!document.getElementById('show-backlog-details-container').classList.contains('d-none')) {
+        document.getElementById('show-backlog-details-container').classList.add('d-none')
+        setChangeModeOfBacklogTaskDetailsContainerBack('');
+    }
+}
+
+
+function summaryAreaIsClosed() {
+    return document.getElementById('summary').classList.contains('d-none');
+}
+
+
+function selectEmployeesIsClosed() {
+    return document.getElementById('select-employees-container').classList.contains('d-none');
+}
+
+
+function detailBoardTaskIsClosed() {
+    return document.getElementById('show-board-details-container').classList.contains('d-none');
+}
+
+
+function detailBacklogTaskIsClosed() {
+    return document.getElementById('show-backlog-details-container').classList.contains('d-none');
+}
+
+
+function clickOnMyModalInSummaryArea() {
+    //if detail task backlog is closed and detail task board is closed, only overview in summary is open
+    if (detailBacklogTaskIsClosed() && detailBoardTaskIsClosed()) {
+        closeUrgentDetails();
+    }
+    //if user selection is closed and detail task board is open
+    if (selectEmployeesIsClosed() && !detailBoardTaskIsClosed()) {
+        document.getElementById('show-board-details-container').classList.add('d-none')
+    }
+    //if user selection is closed and detail task backlog is open
+    if (selectEmployeesIsClosed() && !detailBacklogTaskIsClosed()) {
+        document.getElementById('show-backlog-details-container').classList.add('d-none')
+    }
+    //if user selection is open
+    if (!selectEmployeesIsClosed()) {
+        changeZPositionOfBackgroundContainerLow();
+        document.getElementById('select-employees-container').classList.add('d-none')
     }
 }
 
