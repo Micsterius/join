@@ -9,6 +9,7 @@ function loadSummaryContent() {
         fillSummaryCardsWithZero();
     }
     document.getElementById('summary-name').innerHTML = returnUsersName();
+    changeOverview('my', 'all')
 }
 
 
@@ -74,8 +75,10 @@ function returnUsersName() {
 
 
 function changeOverview(x, y) {
-    document.getElementById(`summary-show-${x}-task-box`).classList.add('text-underline')
-    document.getElementById(`summary-show-${y}-task-box`).classList.remove('text-underline')
+    document.getElementById(`summary-show-${x}-task-box`).classList.add('login-area-btn-login')
+    document.getElementById(`summary-show-${y}-task-box`).classList.remove('login-area-btn-login')
+    document.getElementById(`summary-show-${x}-task-box`).classList.remove('login-area-btn-guest')
+    document.getElementById(`summary-show-${y}-task-box`).classList.add('login-area-btn-guest')
     if (x == 'all') {
         loadSummaryAllTasksContent();
     }
@@ -98,14 +101,14 @@ function loadSummaryAllTasksContent() {
 
 
 function getUrgentTasks() {
-    if (document.getElementById('summary-show-my-task-box').classList.contains('text-underline')) {
+    if (document.getElementById('summary-show-my-task-box').classList.contains('login-area-btn-login')) {
         let userMail = localStorage.getItem('joinLoginMail')
         let tasksOfUser = [];
         tasksOfUser = getUsersTasks(userMail);
         let urgentTasks = findUrgentTasks(tasksOfUser);
         showUrgentTasks(urgentTasks)
     }
-    if (document.getElementById('summary-show-all-task-box').classList.contains('text-underline')) {
+    if (document.getElementById('summary-show-all-task-box').classList.contains('login-area-btn-login')) {
         let urgentTasks = findUrgentTasks(tasks);
         showUrgentTasks(urgentTasks)
     }
